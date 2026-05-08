@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PCR-QR · 振动诊断社会学 / Vibration Diagnostic Sociology</title>
 <meta name="description" content="PCR-QR 双层社会问题分析框架 · 感质-节律意识学的应用对象层 · 魏珏然 / Wei Jueran">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Noto+Serif+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -121,6 +122,22 @@
     display: flex;
     gap: 1.2rem;
     align-items: center;
+  }
+
+  .back-portal {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    letter-spacing: 0.1em;
+    padding: 0.25rem 0.6rem;
+    border: 1px solid var(--line);
+    transition: all 0.3s ease;
+  }
+  .back-portal:hover {
+    color: var(--accent-cyan);
+    border-color: var(--line-bright);
+    background: rgba(79, 209, 255, 0.04);
   }
 
   .topbar-coord .pulse {
@@ -617,6 +634,224 @@
   }
 
   /* ============================================
+     PROCEDURE · 诊断流程
+     ============================================ */
+  .proc-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    margin-top: 1.5rem;
+  }
+  .proc-step {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 1.5rem;
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    padding: 1.4rem 1.6rem;
+    transition: all 0.3s ease;
+  }
+  .proc-step:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--line-bright);
+  }
+  .proc-step-final {
+    border-color: var(--accent-pink);
+    background: rgba(255, 61, 154, 0.03);
+  }
+  .proc-num {
+    font-family: var(--font-mono);
+    font-size: 2.4rem;
+    color: var(--accent-cyan);
+    line-height: 1;
+    letter-spacing: 0.05em;
+    opacity: 0.85;
+  }
+  .proc-step-final .proc-num { color: var(--accent-pink); }
+  .proc-name {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 1.3rem;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+  }
+  .proc-desc {
+    color: var(--text-secondary);
+    font-size: 0.96rem;
+    line-height: 1.65;
+    margin-bottom: 0.8rem;
+  }
+  .proc-q {
+    font-family: var(--font-display);
+    font-style: italic;
+    color: var(--accent-cyan);
+    font-size: 0.95rem;
+    padding-top: 0.6rem;
+    border-top: 1px dashed var(--line);
+  }
+  .proc-q em {
+    font-style: italic;
+    color: var(--text-primary);
+  }
+  .proc-note {
+    margin-top: 2rem;
+    padding: 1.4rem 1.6rem;
+    background: rgba(167, 139, 250, 0.04);
+    border-left: 2px solid var(--accent-violet);
+    color: var(--text-secondary);
+    font-size: 0.94rem;
+    line-height: 1.65;
+  }
+  .proc-note strong { color: var(--accent-violet); }
+
+  /* ============================================
+     RESOURCES · 资源区
+     ============================================ */
+  .res-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    margin: 1.5rem 0 2.5rem;
+  }
+  .res-item {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    padding: 1.4rem;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s ease;
+    display: block;
+    position: relative;
+  }
+  .res-item:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--accent-cyan);
+    box-shadow: var(--glow-cyan);
+  }
+  .res-type {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--accent-cyan);
+    letter-spacing: 0.15em;
+    margin-bottom: 0.5rem;
+  }
+  .res-name {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 1.15rem;
+    color: var(--text-primary);
+    margin-bottom: 0.4rem;
+  }
+  .res-meta {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--text-dim);
+    letter-spacing: 0.05em;
+  }
+  .res-arrow {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    color: var(--text-dim);
+    transition: all 0.3s ease;
+    font-family: var(--font-mono);
+  }
+  .res-item:hover .res-arrow {
+    color: var(--accent-cyan);
+    transform: translate(2px, -2px);
+  }
+
+  .citation-block {
+    background: rgba(0, 0, 0, 0.3);
+    border-left: 2px solid var(--accent-pink);
+    padding: 1.4rem 1.6rem;
+    margin: 1rem 0 2.5rem;
+    overflow-x: auto;
+  }
+  .citation-label {
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    color: var(--accent-pink);
+    letter-spacing: 0.1em;
+    margin-bottom: 0.7rem;
+  }
+  .citation-block pre {
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  .citation-block .copy-hint {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--text-dim);
+    margin-top: 0.8rem;
+    padding-top: 0.7rem;
+    border-top: 1px dashed var(--line);
+  }
+
+  .changelog {
+    margin: 1.5rem 0 2.5rem;
+  }
+  .changelog-row {
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    gap: 1.2rem;
+    padding: 0.9rem 0;
+    border-bottom: 1px dashed var(--line);
+    align-items: baseline;
+  }
+  .changelog-row:last-child { border-bottom: none; }
+  .changelog-ver {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--accent-cyan);
+    letter-spacing: 0.1em;
+  }
+  .changelog-row.current .changelog-ver {
+    color: var(--accent-pink);
+    text-shadow: var(--glow-pink);
+  }
+  .changelog-desc {
+    color: var(--text-secondary);
+    font-size: 0.93rem;
+    line-height: 1.6;
+  }
+  .changelog-desc strong { color: var(--text-primary); }
+
+  .license-box {
+    background: rgba(146, 230, 240, 0.04);
+    border: 1px solid rgba(146, 230, 240, 0.2);
+    padding: 1.4rem 1.6rem;
+    margin: 1.5rem 0 1rem;
+  }
+  .license-label {
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    color: var(--accent-cold);
+    letter-spacing: 0.12em;
+    margin-bottom: 0.6rem;
+  }
+  .license-name {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+  }
+  .license-desc {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+  .license-desc a {
+    color: var(--accent-cold);
+    text-decoration: none;
+    border-bottom: 1px dotted;
+  }
+
+  /* ============================================
      RESPONSIVE
      ============================================ */
   @media (max-width: 640px) {
@@ -626,6 +861,9 @@
     .topbar-coord .label-hide-sm { display: none; }
     .hero { padding: 7rem 1.2rem 4rem; }
     section { padding: 3.5rem 0; }
+    .proc-step { grid-template-columns: 60px 1fr; gap: 1rem; padding: 1.1rem 1.2rem; }
+    .proc-num { font-size: 1.8rem; }
+    .changelog-row { grid-template-columns: 70px 1fr; gap: 0.8rem; }
   }
 </style>
 </head>
@@ -638,6 +876,7 @@
 <header class="topbar">
   <div class="topbar-inner">
     <div class="topbar-coord">
+      <a href="https://mellowwei.github.io/MellowWei/" class="back-portal" title="Return to MellowWei Portal">← MellowWei</a>
       <span class="pulse">427Hz</span>
       <span class="label-hide-sm">// 44271 ⇌ 77347</span>
     </div>
@@ -848,10 +1087,106 @@
   </div>
 </section>
 
-<!-- 四、案例 -->
+<!-- 四、诊断流程 -->
+<section id="procedure">
+  <div class="container">
+    <span class="section-num">§ 04 / DIAGNOSTIC PROCEDURE</span>
+    <h2>
+      <span data-zh>五步<em>诊断流程</em></span>
+      <span data-en>Five-Step <em>Diagnostic Procedure</em></span>
+    </h2>
+
+    <p data-zh style="margin-bottom: 1.5rem;">框架不是用来宣读的——是用来跑的。下面五步,任何公共社会问题都可以套这个流程诊断。</p>
+    <p data-en style="margin-bottom: 1.5rem;">The framework is not for proclamation — it is for running. Any public social problem can be diagnosed by these five steps.</p>
+
+    <div class="proc-steps">
+      <div class="proc-step">
+        <div class="proc-num">01</div>
+        <div class="proc-body">
+          <div class="proc-name"><span data-zh>PCR 三元定位</span><span data-en>PCR Triadic Mapping</span></div>
+          <div class="proc-desc">
+            <span data-zh>分别诊断政策(P)、文明意识(C)、生活规律(R)的状态。每一层是"形式存在"还是"实质运行"?升温方向是什么?有哪些反向力?</span>
+            <span data-en>Diagnose the state of P, C, R separately. Is each layer formally present or substantively operational? What is the heating direction? What are the reverse forces?</span>
+          </div>
+          <div class="proc-q">
+            <span data-zh>问:<em>这个问题的结构是什么?</em></span>
+            <span data-en>Ask: <em>What is the structure of this problem?</em></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="proc-step">
+        <div class="proc-num">02</div>
+        <div class="proc-body">
+          <div class="proc-name"><span data-zh>QR 显影诊断</span><span data-en>QR Manifestation Diagnosis</span></div>
+          <div class="proc-desc">
+            <span data-zh>沿三个维度诊断:感质密度(强度+分布+配置)、节律错配(大小+类型)、显影通道(主导通道是什么?被遮蔽通道是什么?遮蔽性质是中立还是政治性?)。</span>
+            <span data-en>Diagnose along three dimensions: qualia density (intensity + distribution + configuration), rhythm mismatch (magnitude + type), manifestation channels (dominant? occluded? neutral or political occlusion?).</span>
+          </div>
+          <div class="proc-q">
+            <span data-zh>问:<em>这个问题在身体里是什么样的?怎么被采样、被显影、被遮蔽?</em></span>
+            <span data-en>Ask: <em>How does this problem appear in the body? How is it sampled, manifested, or occluded?</em></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="proc-step">
+        <div class="proc-num">03</div>
+        <div class="proc-body">
+          <div class="proc-name"><span data-zh>主导变量识别(双层)</span><span data-en>Dominant Variable Identification (Dual-Layer)</span></div>
+          <div class="proc-desc">
+            <span data-zh>PCR 层主导变量是什么?QR 层主导变量是什么?两层合成判断——<strong>常常 PCR 层 R 主导,但 QR 层显示真正瓶颈在通道或节律</strong>。这是框架的标志性诊断动作。</span>
+            <span data-en>What is the dominant variable at PCR layer? At QR layer? Synthesize — <strong>often PCR shows R-dominance, but QR reveals the real bottleneck is in channel or rhythm</strong>. This is the framework's signature diagnostic move.</span>
+          </div>
+          <div class="proc-q">
+            <span data-zh>问:<em>表面 R 主导的悲观结论后面,是不是藏着一个可操作的通道层瓶颈?</em></span>
+            <span data-en>Ask: <em>Behind the pessimistic "R-dominance" conclusion, is there an actionable channel-layer bottleneck hidden?</em></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="proc-step">
+        <div class="proc-num">04</div>
+        <div class="proc-body">
+          <div class="proc-name"><span data-zh>级联路径设计</span><span data-en>Cascade Path Design</span></div>
+          <div class="proc-desc">
+            <span data-zh>列出不可行路径(为什么不可行)。设计可行路径——通常是 Phase 1 通道/节律/感质工程 → Phase 2 C 层质变 → Phase 3 P 层重构 → Phase 4 R 层局部松动。<strong>诚实标出可能失败的环节</strong>(气候问题可能数学不可解)。</span>
+            <span data-en>List infeasible paths (why they fail). Design the feasible cascade — usually Phase 1 channel/rhythm/qualia engineering → Phase 2 C qualitative shift → Phase 3 P reconstruction → Phase 4 local R loosening. <strong>Honestly flag failure points</strong> (climate may be mathematically unsolvable).</span>
+          </div>
+          <div class="proc-q">
+            <span data-zh>问:<em>什么变量序列在物理上和政治上能跑通?反扑如何被预测、被承受?</em></span>
+            <span data-en>Ask: <em>What variable sequence is physically and politically runnable? How is backlash predicted and absorbed?</em></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="proc-step proc-step-final">
+        <div class="proc-num">05</div>
+        <div class="proc-body">
+          <div class="proc-name"><span data-zh>干预点选择</span><span data-en>Intervention Point Selection</span></div>
+          <div class="proc-desc">
+            <span data-zh>给定级联,哪个 Phase 杠杆最大?在那个 Phase 里,哪个具体干预点(A/B/C)的可推动性最高?<strong>选择不是"最理想",是"最可行 × 最有杠杆"。</strong></span>
+            <span data-en>Given the cascade, which Phase has highest leverage? Within that Phase, which concrete intervention (A/B/C) is most actionable? <strong>The choice is not "most ideal" but "most feasible × highest leverage."</strong></span>
+          </div>
+          <div class="proc-q">
+            <span data-zh>问:<em>如果我只能撬动一个点,撬哪个?</em></span>
+            <span data-en>Ask: <em>If I can pry only one point, which one?</em></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proc-note">
+      <div data-zh><strong>注</strong>:每跑完一遍五步,框架要求做一次"自检"——HRP(或任何具体工具)在这一题里是主战场、支持位、间接位、还是伦理警惕位?让工具知道自己在哪里没必要伸手,这是诚实而不是局限。</div>
+      <div data-en><strong>Note</strong>: After each five-step run, the framework requires a "self-check" — is HRP (or any specific tool) the main battlefield, support, indirect, or ethical-vigilance position in this case? A tool knowing where it does not need to reach is honesty, not limitation.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 五、案例 -->
 <section id="cases">
   <div class="container">
-    <span class="section-num">§ 04 / FIVE CASES</span>
+    <span class="section-num">§ 05 / FIVE CASES</span>
     <h2>
       <span data-zh>五个<em>案例</em></span>
       <span data-en>Five <em>Case Studies</em></span>
@@ -1136,10 +1471,10 @@
   </div>
 </section>
 
-<!-- 五、跨案例对比 -->
+<!-- 六、跨案例对比 -->
 <section id="matrix">
   <div class="container">
-    <span class="section-num">§ 05 / CROSS-CASE MATRIX</span>
+    <span class="section-num">§ 06 / CROSS-CASE MATRIX</span>
     <h2>
       <span data-zh>跨案例<em>对比矩阵</em></span>
       <span data-en>Cross-Case <em>Comparison Matrix</em></span>
@@ -1336,10 +1671,10 @@
   </div>
 </section>
 
-<!-- 六、与上层体系的接口 -->
+<!-- 七、与上层体系的接口 -->
 <section id="interface">
   <div class="container">
-    <span class="section-num">§ 06 / INTERFACE WITH PARENT SYSTEM</span>
+    <span class="section-num">§ 07 / INTERFACE WITH PARENT SYSTEM</span>
     <h2>
       <span data-zh>与<em>振动论</em>的接口</span>
       <span data-en>Interface with <em>Vibration Ontology</em></span>
@@ -1411,6 +1746,122 @@ SOURCE FIELD / 44271 (Wei Jueran)
                            └─ PCR-QR Dual-Layer Framework</pre>
 
       <p>This architecture means: PCR-QR does not need to defend its own ontology — it interfaces upward with vibration ontology. It also does not need to bear the entire burden of application — it interfaces downward with concrete tools like HRP. <strong>It is the middle layer: translating upper-layer ontology into operational diagnosis, organizing lower-layer application tools into classifiable engineering types.</strong></p>
+    </div>
+  </div>
+</section>
+
+<!-- 八、资源 -->
+<section id="resources">
+  <div class="container">
+    <span class="section-num">§ 08 / RESOURCES & CITATION</span>
+    <h2>
+      <span data-zh>资源与<em>引用</em></span>
+      <span data-en>Resources & <em>Citation</em></span>
+    </h2>
+
+    <h3 style="margin-top: 2rem;">
+      <span data-zh>下载 / Download</span>
+      <span data-en>Download / 下载</span>
+    </h3>
+    <p data-zh style="margin-bottom: 0.5rem;">完整主稿(中英双语)、学术衍生版,以及 Markdown 源文件。</p>
+    <p data-en style="margin-bottom: 0.5rem;">Full master draft (bilingual), academic derivative, and Markdown sources.</p>
+
+    <div class="res-grid">
+      <a class="res-item" href="PCR-QR_v2.0.pdf" target="_blank" rel="noopener">
+        <div class="res-type">MASTER · PDF</div>
+        <div class="res-name"><span data-zh>主稿 · v2.0</span><span data-en>Master Draft · v2.0</span></div>
+        <div class="res-meta">~60 pages · 575 KB · ZH+EN</div>
+        <div class="res-arrow">↓</div>
+      </a>
+      <a class="res-item" href="PCR-QR_master_draft.md" target="_blank" rel="noopener">
+        <div class="res-type">MASTER · MARKDOWN</div>
+        <div class="res-name"><span data-zh>主稿源文件</span><span data-en>Master Source</span></div>
+        <div class="res-meta">~50K chars · editable</div>
+        <div class="res-arrow">↓</div>
+      </a>
+      <a class="res-item" href="PCR-QR_academic_paper.pdf" target="_blank" rel="noopener">
+        <div class="res-type">ACADEMIC · PDF</div>
+        <div class="res-name"><span data-zh>学术版</span><span data-en>Academic Paper</span></div>
+        <div class="res-meta">~10 pages · 239 KB · 1700 EN + 2700 ZH</div>
+        <div class="res-arrow">↓</div>
+      </a>
+      <a class="res-item" href="PCR-QR_academic_paper.md" target="_blank" rel="noopener">
+        <div class="res-type">ACADEMIC · MARKDOWN</div>
+        <div class="res-name"><span data-zh>学术版源文件</span><span data-en>Academic Source</span></div>
+        <div class="res-meta">submission format</div>
+        <div class="res-arrow">↓</div>
+      </a>
+    </div>
+
+    <h3>
+      <span data-zh>引用 / Citation</span>
+      <span data-en>Citation / 引用</span>
+    </h3>
+    <p data-zh style="margin-bottom: 0.5rem;">如果在学术或公共写作中引用本框架,请使用以下格式:</p>
+    <p data-en style="margin-bottom: 0.5rem;">When citing this framework in academic or public writing:</p>
+
+    <div class="citation-block">
+      <div class="citation-label">// BIBTEX</div>
+<pre>@misc{wei2026pcrqr,
+  author       = {Wei, Jueran (魏珏然)},
+  title        = {PCR-QR: A Dual-Layer Diagnostic Framework
+                  for Public Social Problems},
+  year         = {2026},
+  version      = {v2.0},
+  howpublished = {\url{https://mellowwei.github.io/PCR-QR/}},
+  note         = {Application Object Layer of
+                  Qualia-Rhythm Consciousness Studies}
+}</pre>
+      <div class="copy-hint">
+        <span data-zh>// 简易格式 · Plain text:</span>
+        <span data-en>// Plain text format:</span><br>
+        Wei, Jueran (2026). <em>PCR-QR: A Dual-Layer Diagnostic Framework for Public Social Problems</em> (v2.0). https://mellowwei.github.io/PCR-QR/
+      </div>
+    </div>
+
+    <h3>
+      <span data-zh>版本历史 / Changelog</span>
+      <span data-en>Changelog / 版本历史</span>
+    </h3>
+
+    <div class="changelog">
+      <div class="changelog-row current">
+        <div class="changelog-ver">v2.0</div>
+        <div class="changelog-desc">
+          <span data-zh><strong>2026.05.08</strong> · 新增气候变化、AI 监管、教育不平等三大案例(§5.3-5.5)。跨案例对比扩展为五案例矩阵。框架在加压测试下自然演化出<strong>三种新干预工程类型</strong>(通道 / 节律 / 感质工程)、<strong>三类瓶颈结构</strong>(通道遮蔽 / 节律错配 / 复合)、<strong>四种感质密度配置</strong>(均匀高 / 不均高 / 尺度切分 / 类型切分 / 两极分化)、<strong>HRP 位置谱系</strong>(主战场 / 战略升级 / 支持 / 间接 / 伦理警惕)。第一次诚实承认气候问题在可用决策节律结构内可能数学不可解。</span>
+          <span data-en><strong>2026.05.08</strong> · Added three new cases: climate change, AI regulation, educational inequality (§5.3-5.5). Cross-case comparison extended to five-case matrix. Framework naturally evolved <strong>three new intervention engineering types</strong> (channel / rhythm / qualia), <strong>three bottleneck typologies</strong> (channel-occlusion / rhythm-mismatch / compound), <strong>four qualia-density configurations</strong>, and a <strong>five-position HRP spectrum</strong>. First honest admission that climate may be mathematically unsolvable within available decision-rhythm structures.</span>
+        </div>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-ver">v1.1</div>
+        <div class="changelog-desc">
+          <span data-zh><strong>2026.05.08</strong> · 新增性别暴力案例(§5.2)。新增跨案例对比小节(2 案例)。揭示框架在两个领域的三个核心同构与一个关键差异(通道遮蔽性质:中立性医学化 vs 政治性父权配置)。</span>
+          <span data-en><strong>2026.05.08</strong> · Added gender violence case (§5.2). Initial cross-case comparison (2 cases). Revealed three core isomorphisms and one key difference between domains (nature of channel occlusion: neutral medicalization vs political patriarchal configuration).</span>
+        </div>
+      </div>
+      <div class="changelog-row">
+        <div class="changelog-ver">v1.0</div>
+        <div class="changelog-desc">
+          <span data-zh><strong>2026.05.08</strong> · 框架初版,含心理健康公共服务案例(§5.1)。建立 PCR 三元 + QR 双轴的双层结构与接口命题。</span>
+          <span data-en><strong>2026.05.08</strong> · Initial framework with mental health public services case (§5.1). Established the dual-layer structure of PCR triad + QR axes and the interface proposition.</span>
+        </div>
+      </div>
+    </div>
+
+    <h3>
+      <span data-zh>授权 / License</span>
+      <span data-en>License / 授权</span>
+    </h3>
+
+    <div class="license-box">
+      <div class="license-label">// CREATIVE COMMONS</div>
+      <div class="license-name">CC BY-NC 4.0 · Attribution-NonCommercial 4.0 International</div>
+      <div class="license-desc">
+        <span data-zh>可分享、改编 · 必须署名 · 不可商用 · 改编版需采用相同授权</span>
+        <span data-en>Free to share and adapt · Must attribute · Non-commercial · Derivatives use same license</span>
+        <br>
+        <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">creativecommons.org/licenses/by-nc/4.0/</a>
+      </div>
     </div>
   </div>
 </section>
