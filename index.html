@@ -1,31 +1,34 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-lang="both">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="PCR-QR Dual-Layer Framework · Logic Generative Upgrade · Wei Jueran · 44271 · 427Hz" />
-  <meta name="theme-color" content="#0ff0c8" />
-  <title>PCR-QR · Logic Generative Upgrade · 魏珏然</title>
+  <meta name="description" content="PCR-QR Framework v4.0 · Total Logic Operational Interface · 魏珏然 · 44271 · Logic Generative Public Diagnosis" />
+  <meta name="theme-color" content="#63ffd6" />
+  <title>PCR-QR v4.0 · Total Logic Operational Interface · 魏珏然</title>
   <style>
     :root{
-      --bg:#05080d;
-      --panel:#09131a;
-      --panel2:#0a1815;
-      --ink:#eefdf7;
-      --muted:rgba(238,253,247,.72);
-      --dim:rgba(238,253,247,.52);
-      --line:rgba(131,255,220,.18);
-      --cyan:#4fffe0;
+      --bg:#03070c;
+      --bg2:#07130f;
+      --ink:#f1fff8;
+      --muted:rgba(241,255,248,.72);
+      --dim:rgba(241,255,248,.52);
+      --ghost:rgba(241,255,248,.34);
+      --line:rgba(125,255,216,.18);
+      --line2:rgba(255,231,118,.20);
+      --cyan:#63ffe0;
       --green:#8cffcf;
-      --gold:#ffe36e;
-      --pink:#ff7ad9;
+      --gold:#ffe776;
+      --pink:#ff7add;
       --violet:#b79cff;
-      --blue:#78c7ff;
+      --blue:#77c9ff;
       --red:#ff7474;
+      --orange:#ffb45c;
       --glass:rgba(255,255,255,.055);
+      --glass2:rgba(255,255,255,.09);
+      --shadow:0 32px 90px rgba(0,0,0,.55);
       --radius:28px;
-      --shadow:0 30px 90px rgba(0,0,0,.55);
-      --max:1220px;
+      --max:1240px;
     }
     *{box-sizing:border-box;margin:0;padding:0}
     html{scroll-behavior:smooth}
@@ -33,245 +36,464 @@
       min-height:100vh;
       color:var(--ink);
       background:
-        radial-gradient(circle at 20% 5%, rgba(79,255,224,.14), transparent 32%),
-        radial-gradient(circle at 80% 18%, rgba(255,122,217,.11), transparent 34%),
-        radial-gradient(circle at 50% 92%, rgba(255,227,110,.08), transparent 42%),
-        linear-gradient(135deg,#05080d 0%,#07110f 44%,#090612 100%);
-      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC", sans-serif;
-      line-height:1.6;
+        radial-gradient(circle at 12% 6%, rgba(99,255,224,.16), transparent 30%),
+        radial-gradient(circle at 84% 14%, rgba(255,122,221,.12), transparent 33%),
+        radial-gradient(circle at 50% 88%, rgba(255,231,118,.08), transparent 38%),
+        linear-gradient(135deg,#03070c 0%,#07130f 44%,#090614 100%);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC", "PingFang SC", sans-serif;
+      line-height:1.62;
       overflow-x:hidden;
     }
-    body:before{
+    body::before{
       content:"";
       position:fixed;inset:0;pointer-events:none;z-index:-3;
       background-image:
         linear-gradient(rgba(255,255,255,.026) 1px, transparent 1px),
         linear-gradient(90deg, rgba(255,255,255,.026) 1px, transparent 1px);
-      background-size:56px 56px;
-      mask-image:radial-gradient(circle at 50% 20%, #000, transparent 82%);
+      background-size:54px 54px;
+      mask-image:radial-gradient(circle at 50% 22%, #000, transparent 82%);
     }
-    body:after{
+    body::after{
       content:"";
       position:fixed;inset:0;pointer-events:none;z-index:-2;
-      background:radial-gradient(circle at 50% 38%, transparent 0%, rgba(0,0,0,.35) 72%, rgba(0,0,0,.70) 100%);
+      background:
+        radial-gradient(circle at 50% 38%, transparent 0%, rgba(0,0,0,.30) 68%, rgba(0,0,0,.74) 100%),
+        linear-gradient(to bottom, rgba(255,255,255,.02), transparent 18%, transparent 84%, rgba(99,255,224,.035));
     }
-    #field{position:fixed;inset:0;width:100%;height:100%;z-index:-4;opacity:.88}
+    #field{position:fixed;inset:0;width:100%;height:100%;z-index:-4;opacity:.92}
+    #progress{position:fixed;left:0;top:0;height:3px;width:0;background:linear-gradient(90deg,var(--cyan),var(--gold),var(--pink));z-index:999;box-shadow:0 0 18px rgba(99,255,224,.55)}
     a{color:inherit;text-decoration:none}
     .shell{width:min(var(--max), calc(100% - 34px));margin:0 auto}
     .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace}
+    .zh,.en{display:block}
+    html[data-lang="zh"] .en{display:none!important}
+    html[data-lang="en"] .zh{display:none!important}
+    html[data-lang="both"] .en{opacity:.86}
     .nav{
-      position:fixed;top:16px;left:50%;transform:translateX(-50%);
+      position:fixed;top:14px;left:50%;transform:translateX(-50%);
       width:min(var(--max), calc(100% - 24px));z-index:90;
       border:1px solid var(--line);border-radius:999px;
-      background:rgba(4,8,12,.72);backdrop-filter:blur(20px);
-      display:flex;align-items:center;justify-content:space-between;gap:16px;padding:10px 12px;
-      box-shadow:0 18px 60px rgba(0,0,0,.38);
+      background:rgba(3,7,12,.74);backdrop-filter:blur(22px);
+      display:flex;align-items:center;justify-content:space-between;gap:14px;padding:10px 12px;
+      box-shadow:0 20px 70px rgba(0,0,0,.42);
     }
     .brand{display:flex;align-items:center;gap:10px;min-width:max-content}
-    .brand-dot{width:33px;height:33px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#fff,transparent 18%),radial-gradient(circle at 60% 55%,var(--cyan),transparent 45%),radial-gradient(circle at 45% 75%,var(--pink),transparent 60%);box-shadow:0 0 26px rgba(79,255,224,.42)}
-    .brand strong{font-size:12px;letter-spacing:.12em;text-transform:uppercase;display:block;color:#fff}
+    .brand-dot{width:34px;height:34px;border-radius:50%;background:radial-gradient(circle at 32% 28%,#fff,transparent 18%),radial-gradient(circle at 60% 55%,var(--cyan),transparent 46%),radial-gradient(circle at 44% 78%,var(--pink),transparent 62%);box-shadow:0 0 30px rgba(99,255,224,.48),0 0 36px rgba(255,122,221,.18);animation:pulse 3.8s ease-in-out infinite}
+    @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
+    .brand strong{font-size:12px;letter-spacing:.13em;text-transform:uppercase;display:block;color:#fff;line-height:1.1}
     .brand span{font-size:11px;color:var(--muted);display:block;line-height:1.1}
-    .nav-links{display:flex;align-items:center;justify-content:flex-end;gap:3px;flex-wrap:wrap}
-    .nav-links a,.lang-btn{font-size:12px;color:var(--muted);padding:8px 10px;border-radius:999px;transition:.25s ease;border:0;background:transparent;cursor:pointer}
+    .nav-links{display:flex;align-items:center;justify-content:flex-end;gap:2px;flex-wrap:wrap}
+    .nav-links a,.lang-btn,.menu{font-size:12px;color:var(--muted);padding:8px 9px;border-radius:999px;transition:.25s ease;border:0;background:transparent;cursor:pointer}
     .nav-links a:hover,.lang-btn:hover{background:rgba(255,255,255,.08);color:#fff}
-    .lang-btn{border:1px solid rgba(255,255,255,.10);color:var(--cyan)}
-    .menu{display:none;border:1px solid var(--line);background:rgba(255,255,255,.06);color:#fff;border-radius:999px;padding:8px 12px}
-    section{padding:104px 0;position:relative}
+    .lang-btn{border:1px solid rgba(255,255,255,.11);color:var(--cyan)}
+    .menu{display:none;border:1px solid var(--line);background:rgba(255,255,255,.06);color:#fff}
+    section{padding:108px 0;position:relative}
     .hero{min-height:100vh;display:grid;place-items:center;padding-top:140px}
-    .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:32px;align-items:center}
-    .kicker{display:inline-flex;gap:10px;align-items:center;border:1px solid rgba(79,255,224,.22);background:rgba(79,255,224,.06);color:var(--cyan);border-radius:999px;padding:8px 13px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:20px}
-    .kicker:before{content:"";width:8px;height:8px;border-radius:50%;background:var(--cyan);box-shadow:0 0 16px var(--cyan)}
-    h1{font-size:clamp(46px,8vw,106px);letter-spacing:-.075em;line-height:.92;margin-bottom:22px}
-    h2{font-size:clamp(34px,5vw,66px);letter-spacing:-.055em;line-height:1;margin-bottom:18px}
+    .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:34px;align-items:center}
+    .kicker{display:inline-flex;gap:10px;align-items:center;border:1px solid rgba(99,255,224,.24);background:rgba(99,255,224,.06);color:var(--cyan);border-radius:999px;padding:8px 13px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:20px}
+    .kicker::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--cyan);box-shadow:0 0 16px var(--cyan)}
+    h1{font-size:clamp(46px,8.4vw,116px);letter-spacing:-.078em;line-height:.9;margin-bottom:22px}
+    h2{font-size:clamp(34px,5vw,68px);letter-spacing:-.058em;line-height:.98;margin-bottom:18px}
     h3{font-size:23px;line-height:1.16;margin-bottom:12px}
-    .grad{background:linear-gradient(110deg,#fff,var(--cyan) 34%,var(--gold) 61%,var(--pink));-webkit-background-clip:text;color:transparent}
-    .subtitle{font-size:clamp(18px,2.1vw,25px);color:rgba(238,253,247,.82);max-width:800px;margin-bottom:18px}
+    h4{font-size:17px;margin-bottom:8px;line-height:1.25}
+    .grad{background:linear-gradient(110deg,#fff,var(--cyan) 30%,var(--gold) 58%,var(--pink));-webkit-background-clip:text;color:transparent}
+    .subtitle{font-size:clamp(18px,2.1vw,25px);color:rgba(241,255,248,.84);max-width:830px;margin-bottom:18px}
     .subtitle strong{color:#fff}
     .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
-    .btn{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;padding:13px 18px;font-weight:760;font-size:14px;transition:.25s ease;border:1px solid var(--line)}
-    .btn.primary{background:linear-gradient(135deg,var(--cyan),var(--gold));color:#04110f;border:0;box-shadow:0 18px 48px rgba(79,255,224,.18)}
+    .btn{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;padding:13px 18px;font-weight:800;font-size:14px;transition:.25s ease;border:1px solid var(--line)}
+    .btn.primary{background:linear-gradient(135deg,var(--cyan),var(--gold));color:#04110f;border:0;box-shadow:0 18px 48px rgba(99,255,224,.18)}
     .btn.secondary{background:rgba(255,255,255,.065);color:#fff}
     .btn:hover{transform:translateY(-2px);filter:brightness(1.08)}
-    .hero-console{border:1px solid var(--line);border-radius:36px;padding:28px;min-height:560px;background:linear-gradient(145deg,rgba(255,255,255,.085),rgba(255,255,255,.028)),radial-gradient(circle at 30% 0%,rgba(79,255,224,.15),transparent 35%),radial-gradient(circle at 78% 82%,rgba(255,122,217,.10),transparent 42%);box-shadow:var(--shadow);position:relative;overflow:hidden}
-    .console-orbit{position:absolute;inset:42px;border-radius:50%;border:1px solid rgba(255,255,255,.12);animation:spin 28s linear infinite}.console-orbit:nth-child(2){inset:82px 50px;animation-duration:40s;transform:rotate(33deg)}.console-orbit:nth-child(3){inset:132px 82px;animation-duration:24s;transform:rotate(-28deg)}@keyframes spin{from{rotate:0deg}to{rotate:360deg}}
-    .console-core{position:absolute;left:50%;top:43%;transform:translate(-50%,-50%);width:220px;height:220px;border-radius:50%;background:radial-gradient(circle at 35% 27%,#fff 0 7%,transparent 18%),radial-gradient(circle at 45% 48%,rgba(79,255,224,.92),transparent 42%),radial-gradient(circle at 70% 76%,rgba(255,227,110,.65),transparent 55%);box-shadow:0 0 80px rgba(79,255,224,.30),0 0 120px rgba(255,122,217,.13),inset 0 0 40px rgba(255,255,255,.16);animation:float 6s ease-in-out infinite}@keyframes float{0%,100%{transform:translate(-50%,-50%) translateY(0)}50%{transform:translate(-50%,-50%) translateY(-16px)}}
-    .system-card{position:absolute;border:1px solid rgba(255,255,255,.13);background:rgba(3,8,12,.63);backdrop-filter:blur(14px);border-radius:18px;padding:13px 14px;color:var(--muted);font-size:13px;max-width:245px;box-shadow:0 18px 50px rgba(0,0,0,.26)}
-    .system-card b{display:block;color:#fff;margin-bottom:2px}.s1{left:26px;top:34px}.s2{right:28px;top:126px}.s3{left:34px;bottom:126px}.s4{right:26px;bottom:42px}.s5{left:50%;bottom:36px;transform:translateX(-50%);text-align:center;color:var(--gold)}
-    .section-head{max-width:900px;margin-bottom:34px}.eyebrow{color:var(--pink);font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:800;margin-bottom:12px}.desc{font-size:17px;color:var(--muted);max-width:850px}.desc strong{color:#fff}
-    .glass{border:1px solid var(--line);background:linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.025));backdrop-filter:blur(16px);border-radius:var(--radius);box-shadow:var(--shadow)}
+    .hero-console{border:1px solid var(--line);border-radius:38px;padding:28px;min-height:580px;background:linear-gradient(145deg,rgba(255,255,255,.085),rgba(255,255,255,.028)),radial-gradient(circle at 30% 0%,rgba(99,255,224,.15),transparent 35%),radial-gradient(circle at 78% 82%,rgba(255,122,221,.10),transparent 42%);box-shadow:var(--shadow);position:relative;overflow:hidden}
+    .hero-console::after{content:"";position:absolute;inset:-40%;background:conic-gradient(from 0deg,transparent,rgba(99,255,224,.07),transparent,rgba(255,231,118,.06),transparent);animation:spin 16s linear infinite;opacity:.7}
+    .console-orbit{position:absolute;inset:42px;border-radius:50%;border:1px solid rgba(255,255,255,.12);animation:spin 28s linear infinite;z-index:1}.console-orbit:nth-child(2){inset:82px 50px;animation-duration:40s;transform:rotate(33deg)}.console-orbit:nth-child(3){inset:132px 82px;animation-duration:24s;transform:rotate(-28deg)}@keyframes spin{from{rotate:0deg}to{rotate:360deg}}
+    .console-core{position:absolute;z-index:2;left:50%;top:43%;transform:translate(-50%,-50%);width:230px;height:230px;border-radius:50%;background:radial-gradient(circle at 35% 27%,#fff 0 7%,transparent 18%),radial-gradient(circle at 45% 48%,rgba(99,255,224,.92),transparent 42%),radial-gradient(circle at 70% 76%,rgba(255,231,118,.65),transparent 55%);box-shadow:0 0 90px rgba(99,255,224,.30),0 0 130px rgba(255,122,221,.13),inset 0 0 42px rgba(255,255,255,.16);animation:float 6s ease-in-out infinite}@keyframes float{0%,100%{transform:translate(-50%,-50%) translateY(0)}50%{transform:translate(-50%,-50%) translateY(-16px)}}
+    .system-card{z-index:3;position:absolute;border:1px solid rgba(255,255,255,.13);background:rgba(3,8,12,.66);backdrop-filter:blur(14px);border-radius:18px;padding:13px 14px;color:var(--muted);font-size:13px;max-width:250px;box-shadow:0 18px 50px rgba(0,0,0,.26)}
+    .system-card b{display:block;color:#fff;margin-bottom:2px}.s1{left:26px;top:34px}.s2{right:28px;top:126px}.s3{left:34px;bottom:142px}.s4{right:26px;bottom:78px}.s5{left:50%;bottom:30px;transform:translateX(-50%);text-align:center;color:var(--gold);min-width:280px}
+    .section-head{max-width:930px;margin-bottom:34px}.eyebrow{color:var(--pink);font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:900;margin-bottom:12px}.desc{font-size:17px;color:var(--muted);max-width:880px}.desc strong{color:#fff}
+    .glass{border:1px solid var(--line);background:linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.025));backdrop-filter:blur(17px);border-radius:var(--radius);box-shadow:var(--shadow)}
     .grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-    .card{border:1px solid var(--line);border-radius:var(--radius);background:linear-gradient(145deg,rgba(255,255,255,.07),rgba(255,255,255,.024)),radial-gradient(circle at 20% 0%,rgba(79,255,224,.08),transparent 42%);padding:25px;transition:.25s ease;min-height:100%}.card:hover{transform:translateY(-4px);border-color:rgba(79,255,224,.34);box-shadow:0 25px 72px rgba(0,0,0,.28)}
-    .tag{display:inline-flex;align-items:center;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);color:rgba(255,255,255,.78);border-radius:999px;padding:6px 9px;font-size:12px;margin:4px 4px 0 0}.tag.gold{color:var(--gold);border-color:rgba(255,227,110,.24)}.tag.cyan{color:var(--cyan);border-color:rgba(79,255,224,.24)}
+    .card{border:1px solid var(--line);border-radius:var(--radius);background:linear-gradient(145deg,rgba(255,255,255,.07),rgba(255,255,255,.024)),radial-gradient(circle at 20% 0%,rgba(99,255,224,.08),transparent 42%);padding:25px;transition:.25s ease;min-height:100%;position:relative;overflow:hidden}.card::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.035),transparent);transform:translateX(-120%);transition:.7s ease}.card:hover::before{transform:translateX(120%)}.card:hover{transform:translateY(-4px);border-color:rgba(99,255,224,.35);box-shadow:0 25px 72px rgba(0,0,0,.28)}
+    .tag{display:inline-flex;align-items:center;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);color:rgba(255,255,255,.78);border-radius:999px;padding:6px 9px;font-size:12px;margin:4px 4px 0 0}.tag.gold{color:var(--gold);border-color:rgba(255,231,118,.24)}.tag.cyan{color:var(--cyan);border-color:rgba(99,255,224,.24)}.tag.pink{color:var(--pink);border-color:rgba(255,122,221,.24)}
     .num{display:inline-flex;color:#04110f;background:linear-gradient(135deg,var(--cyan),var(--gold));border-radius:999px;font-size:12px;font-weight:900;padding:5px 10px;margin-bottom:17px}.card p,.panel p{color:var(--muted);font-size:15px}.card p+p{margin-top:10px}
-    .formula{border:1px solid rgba(255,227,110,.28);background:rgba(255,227,110,.055);border-radius:20px;padding:18px;margin-top:20px;font-size:17px;color:#fff}.formula strong{color:var(--gold)}
+    .formula{border:1px solid rgba(255,231,118,.28);background:rgba(255,231,118,.055);border-radius:20px;padding:18px;margin-top:20px;font-size:17px;color:#fff}.formula strong{color:var(--gold)}
     .split-panel{padding:34px;display:grid;grid-template-columns:.9fr 1.1fr;gap:28px;align-items:center}.big-quote{font-size:clamp(28px,4.4vw,58px);line-height:1.02;letter-spacing:-.055em}.big-quote span{color:var(--cyan)}
-    .steps{counter-reset:step;display:grid;gap:15px}.step{display:grid;grid-template-columns:68px 1fr;gap:18px;border:1px solid var(--line);background:rgba(255,255,255,.045);border-radius:22px;padding:19px}.step:before{counter-increment:step;content:counter(step,decimal-leading-zero);width:52px;height:52px;border-radius:50%;display:grid;place-items:center;background:rgba(79,255,224,.08);border:1px solid rgba(79,255,224,.28);color:var(--cyan);font-weight:900}.step b{display:block;color:#fff;font-size:18px;margin-bottom:4px}.step span{color:var(--muted)}
-    .triad{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.triad .card{min-height:260px}.letter{font-size:72px;line-height:1;color:var(--cyan);font-weight:900;letter-spacing:-.08em;text-shadow:0 0 25px rgba(79,255,224,.18)}.letter.q{color:var(--pink)}.letter.r{color:var(--gold)}
-    details.case{border:1px solid var(--line);background:rgba(255,255,255,.045);border-radius:24px;margin-bottom:14px;overflow:hidden}details.case[open]{border-color:rgba(79,255,224,.30);box-shadow:0 18px 60px rgba(0,0,0,.20)}summary{cursor:pointer;padding:20px 22px;display:grid;grid-template-columns:110px 1fr 220px;gap:18px;align-items:center;list-style:none}summary::-webkit-details-marker{display:none}.case-id{color:var(--gold);font-weight:900;letter-spacing:.08em}.case-title{font-size:21px;font-weight:800}.case-type{text-align:right;color:var(--cyan);font-size:13px}.case-body{padding:0 22px 22px}.case-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.case-box{border:1px solid rgba(255,255,255,.10);background:rgba(0,0,0,.16);border-radius:18px;padding:16px}.case-box h4{color:var(--gold);margin-bottom:7px}.case-box p{color:var(--muted);font-size:14px}
-    .matrix-wrap{overflow:auto;border-radius:24px;border:1px solid var(--line);background:rgba(255,255,255,.04)}table{width:100%;border-collapse:collapse;min-width:980px}th,td{border-bottom:1px solid rgba(255,255,255,.09);border-right:1px solid rgba(255,255,255,.07);padding:15px;text-align:left;vertical-align:top;font-size:14px}th{color:#04110f;background:linear-gradient(135deg,rgba(79,255,224,.93),rgba(255,227,110,.82));font-weight:900}td{color:var(--muted)}td:first-child{color:#fff;font-weight:760}
-    .analyzer{padding:28px}.analyzer textarea{width:100%;min-height:120px;border-radius:18px;border:1px solid rgba(79,255,224,.22);background:rgba(0,0,0,.25);color:#fff;padding:16px;font:15px/1.6 inherit;resize:vertical;outline:none}.analyzer-actions{display:flex;gap:10px;flex-wrap:wrap;margin:13px 0}.output{border:1px solid rgba(255,255,255,.11);background:rgba(0,0,0,.18);border-radius:18px;padding:18px;color:var(--muted);white-space:pre-wrap;min-height:130px}.output b{color:#fff}.pill-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.pill{border:1px solid rgba(79,255,224,.20);color:var(--cyan);background:rgba(79,255,224,.055);border-radius:999px;padding:7px 10px;font-size:12px}
-    .system-map{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;border:1px solid var(--line);background:rgba(0,0,0,.24);border-radius:24px;padding:24px;color:rgba(238,253,247,.78);line-height:1.9;overflow:auto}.system-map .hot{color:var(--cyan)}.system-map .gold{color:var(--gold)}.system-map .pink{color:var(--pink)}
-    .footer{padding:45px 0 70px;border-top:1px solid var(--line);color:var(--dim);font-size:13px}.footer-inner{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
-    .hidden-en .en{display:none}.hidden-zh .zh{display:none}
-    .reveal{opacity:0;transform:translateY(24px);transition:.7s ease}.reveal.visible{opacity:1;transform:translateY(0)}
-    @media(max-width:980px){.hero-grid,.grid-2,.grid-3,.grid-4,.split-panel,.triad{grid-template-columns:1fr}.hero-console{min-height:470px}summary{grid-template-columns:1fr}.case-type{text-align:left}.case-grid{grid-template-columns:1fr}.nav{align-items:flex-start;border-radius:24px;flex-wrap:wrap}.menu{display:inline-flex;margin-left:auto}.nav-links{display:none;width:100%;justify-content:flex-start;padding-top:8px}.nav.open .nav-links{display:flex}section{padding:86px 0}.hero{padding-top:120px}.s5{display:none}}
-    @media(max-width:560px){.shell{width:min(100% - 22px,var(--max))}.hero-console{min-height:420px;border-radius:26px}.console-core{width:170px;height:170px}.system-card{font-size:12px;max-width:190px}.s1{left:14px;top:22px}.s2{right:12px;top:105px}.s3{left:14px;bottom:88px}.s4{right:12px;bottom:24px}.card,.split-panel{padding:20px}}
+    .axiom-panel{padding:34px;display:grid;grid-template-columns:1fr 1fr;gap:26px}.axiom-card{border:1px solid rgba(255,231,118,.22);border-radius:24px;background:rgba(255,231,118,.045);padding:24px}.axiom-card h3{color:var(--gold)}
+    .chain{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:18px}.chip{border:1px solid rgba(99,255,224,.22);background:rgba(99,255,224,.055);color:#dffff7;border-radius:999px;padding:9px 12px;font-size:13px}.arrow{color:var(--gold);opacity:.85}
+    .steps{counter-reset:step;display:grid;gap:15px}.step{display:grid;grid-template-columns:70px 1fr;gap:18px;border:1px solid var(--line);background:rgba(255,255,255,.045);border-radius:22px;padding:19px}.step::before{counter-increment:step;content:counter(step,decimal-leading-zero);width:54px;height:54px;border-radius:50%;display:grid;place-items:center;background:rgba(99,255,224,.08);border:1px solid rgba(99,255,224,.28);color:var(--cyan);font-weight:900}.step b{display:block;color:#fff;margin-bottom:5px}.step span{display:block;color:var(--muted);font-size:14px}
+    .op-map{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-top:22px}.op-node{border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.045);padding:16px;min-height:150px}.op-node strong{display:block;color:var(--cyan);font-size:13px;margin-bottom:8px}.op-node p{font-size:13px;color:var(--muted)}
+    .letter{font-size:46px;font-weight:900;color:var(--cyan);line-height:1;margin-bottom:12px}.letter.q{color:var(--pink)}.letter.r{color:var(--gold)}
+    .case{border:1px solid var(--line);border-radius:24px;background:rgba(255,255,255,.045);margin-bottom:14px;overflow:hidden}.case summary{cursor:pointer;list-style:none;display:grid;grid-template-columns:130px 1fr 170px;gap:18px;align-items:center;padding:20px}.case summary::-webkit-details-marker{display:none}.case-id{font-weight:900;color:var(--cyan);font-size:13px}.case-title{font-size:20px;font-weight:850;color:#fff}.case-type{color:var(--gold);font-size:13px;text-align:right}.case-body{border-top:1px solid var(--line);padding:22px}.case-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}.case-box{border:1px solid rgba(255,255,255,.10);background:rgba(0,0,0,.16);border-radius:18px;padding:18px}.case-box h4{color:var(--gold)}.case-box p{color:var(--muted);font-size:14px}
+    .matrix{overflow:auto;border-radius:24px}.matrix table{border-collapse:collapse;width:100%;min-width:980px}.matrix th,.matrix td{border-bottom:1px solid var(--line);border-right:1px solid var(--line);padding:15px;vertical-align:top;text-align:left;font-size:14px}.matrix th{background:linear-gradient(135deg,rgba(99,255,224,.18),rgba(255,231,118,.12));color:#fff}.matrix td{color:var(--muted)}.matrix tr:last-child td{border-bottom:0}.matrix th:last-child,.matrix td:last-child{border-right:0}
+    .engine{padding:28px;display:grid;grid-template-columns:.88fr 1.12fr;gap:22px}.engine textarea,.engine select{width:100%;border:1px solid rgba(99,255,224,.22);background:rgba(0,0,0,.30);color:#fff;border-radius:18px;padding:14px;font:inherit;outline:none}.engine textarea{min-height:150px;resize:vertical}.engine select{margin-top:10px}.engine-controls{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}.engine button{border:0;border-radius:999px;padding:12px 15px;font-weight:900;cursor:pointer}.engine .run{background:linear-gradient(135deg,var(--cyan),var(--gold));color:#04110f}.engine .clear{background:rgba(255,255,255,.08);color:#fff;border:1px solid var(--line)}.output{border:1px solid rgba(255,255,255,.10);background:rgba(0,0,0,.24);border-radius:22px;padding:18px;min-height:320px;white-space:pre-wrap;color:rgba(241,255,248,.86);font-size:14px}.output b{color:#fff}.output .gold{color:var(--gold)}.output .cyan{color:var(--cyan)}
+    .routes{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}.route{border:1px solid var(--line);background:rgba(255,255,255,.045);border-radius:20px;padding:18px}.route strong{color:var(--cyan);display:block;margin-bottom:8px}.route p{color:var(--muted);font-size:13px}
+    .map{padding:28px}.map-line{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:var(--muted);font-size:14px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.055)}.map-line strong{color:var(--cyan)}.map-line.gold strong{color:var(--gold)}
+    .manifesto{padding:38px;text-align:center}.manifesto h2{font-size:clamp(42px,7vw,88px)}.manifesto p{font-size:18px;color:var(--muted);max-width:900px;margin:0 auto 16px}.manifesto .final{color:#fff;font-weight:900;font-size:24px;margin-top:22px}
+    .footer{border-top:1px solid var(--line);padding:42px 0 70px;color:var(--ghost);font-size:13px}.footer-inner{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+    .reveal{opacity:0;transform:translateY(24px);transition:.72s ease}.reveal.visible{opacity:1;transform:translateY(0)}
+    @media(max-width:1050px){.hero-grid,.engine,.split-panel,.axiom-panel{grid-template-columns:1fr}.grid-4,.grid-3,.grid-2,.routes,.op-map{grid-template-columns:1fr 1fr}.hero-console{min-height:510px}.case summary{grid-template-columns:1fr}.case-type{text-align:left}.case-grid{grid-template-columns:1fr}}
+    @media(max-width:760px){.nav{align-items:flex-start;border-radius:24px;flex-wrap:wrap}.menu{display:inline-flex;margin-left:auto}.nav-links{display:none;width:100%;justify-content:flex-start;padding-top:8px}.nav.open .nav-links{display:flex}.nav.open{border-radius:24px}.grid-4,.grid-3,.grid-2,.routes,.op-map{grid-template-columns:1fr}section{padding:84px 0}.hero{padding-top:130px}.hero-console{min-height:430px}.console-core{width:170px;height:170px}.system-card{font-size:12px;max-width:180px}.s1{left:14px;top:24px}.s2{right:14px;top:96px}.s3{left:14px;bottom:120px}.s4{right:14px;bottom:76px}.s5{left:50%;bottom:18px;min-width:230px}.shell{width:min(var(--max), calc(100% - 24px))}}
   </style>
 </head>
-<body class="hidden-en">
-<canvas id="field" aria-hidden="true"></canvas>
-<nav class="nav" id="nav">
-  <a class="brand" href="#top"><span class="brand-dot"></span><span><strong>PCR-QR v3.0</strong><span>Logic Generative Upgrade · 44271</span></span></a>
-  <button class="menu" id="menuBtn" type="button">Menu</button>
-  <div class="nav-links">
-    <a href="#position">Position</a><a href="#logic">Logic</a><a href="#operation">Operation</a><a href="#pcrqr">PCR-QR</a><a href="#cases">Cases</a><a href="#matrix">Matrix</a><a href="#analyzer">Analyzer</a><a href="#system">System</a>
-    <button class="lang-btn" id="langBtn" type="button">中文 / EN</button>
-  </div>
-</nav>
-<main id="top">
-  <section class="hero">
-    <div class="shell hero-grid">
-      <div class="reveal">
-        <div class="kicker">VIBRATION 427Hz · SOURCE FIELD 44271 · v3.0</div>
-        <h1>PCR-QR <span class="grad">Framework</span></h1>
-        <p class="subtitle zh"><strong>振动诊断社会学</strong>从 v2.0 升级为逻辑生成学运行接口：它不只诊断公共问题，而是审计一个问题如何被语言、通道、节律与制度共同制造。</p>
-        <p class="subtitle en"><strong>Vibration Diagnostic Sociology</strong> is upgraded into an operational interface of Logic Generative Studies: it does not only diagnose public problems, but audits how a problem is produced by language, channels, rhythm, and institutions.</p>
-        <div class="hero-actions"><a class="btn primary" href="#logic">Enter Logic Layer</a><a class="btn secondary" href="#analyzer">Run Diagnosis</a><a class="btn secondary" href="https://mellowwei.github.io/MellowWei/" target="_blank" rel="noopener">MellowWei ↗</a></div>
-        <div class="formula mono"><strong>Core Upgrade:</strong> PCR-QR = Public Structure × Qualia-Rhythm × Language Operation × Interface Protocol</div>
+<body>
+  <div id="progress"></div>
+  <canvas id="field" aria-hidden="true"></canvas>
+
+  <nav class="nav" id="nav">
+    <a class="brand" href="#top" aria-label="PCR-QR home">
+      <span class="brand-dot"></span>
+      <span><strong>PCR-QR v4.0</strong><span>Total Logic Operational Interface · 44271</span></span>
+    </a>
+    <button class="menu" id="menuBtn" type="button">Menu</button>
+    <div class="nav-links">
+      <a href="#axiom">Axiom</a>
+      <a href="#logic">Logic</a>
+      <a href="#operation">Operation</a>
+      <a href="#pcrqr">PCR-QR</a>
+      <a href="#cases">Cases</a>
+      <a href="#analyzer">Analyzer</a>
+      <a href="#system">System</a>
+      <button class="lang-btn" data-lang="zh">中文</button>
+      <button class="lang-btn" data-lang="en">EN</button>
+      <button class="lang-btn" data-lang="both">双语</button>
+    </div>
+  </nav>
+
+  <main id="top">
+    <section class="hero">
+      <div class="shell hero-grid">
+        <div class="reveal">
+          <div class="kicker">VIBRATION 427Hz · SOURCE FIELD 44271 · v4.0</div>
+          <h1>PCR-QR <span class="grad">Operational Interface</span></h1>
+          <p class="subtitle zh"><strong>公共问题不是“在那里”等待解释。</strong>公共问题被语言命名、被通道分配、被节律采样、被制度重复生产。v4.0 把 PCR-QR 升级为全维逻辑学的社会诊断与现实生成接口。</p>
+          <p class="subtitle en"><strong>Public problems are not simply “out there” waiting to be explained.</strong> They are named by language, routed through channels, sampled by rhythm, and reproduced by institutions. v4.0 turns PCR-QR into the social-diagnostic and reality-generative interface of Total Logic.</p>
+          <div class="hero-actions">
+            <a class="btn primary" href="#analyzer">Run v4 Diagnosis</a>
+            <a class="btn secondary" href="#operation">Enter Operation Layer</a>
+            <a class="btn secondary" href="https://mellowwei.github.io/MellowWei/" target="_blank" rel="noopener">MellowWei ↗</a>
+          </div>
+          <div class="formula mono"><strong>v4.0 Formula:</strong> Public Problem = PCR Structure × QR Manifestation × Language Operation × Interface Engineering × Feedback Re-naming</div>
+        </div>
+        <div class="hero-console reveal" aria-label="animated operational console">
+          <div class="console-orbit"></div><div class="console-orbit"></div><div class="console-orbit"></div><div class="console-core"></div>
+          <div class="system-card s1"><b>PCR</b>Policy · Consciousness · Routine</div>
+          <div class="system-card s2"><b>QR</b>Qualia · Rhythm · embodied manifestation</div>
+          <div class="system-card s3"><b>Logic</b>Naming · Pressure · Drift · Phase Transition</div>
+          <div class="system-card s4"><b>Interface</b>Engineering · Feedback · Re-naming</div>
+          <div class="system-card s5"><b>C = Q × R</b>Consciousness manifests as qualia through rhythm</div>
+        </div>
       </div>
-      <div class="hero-console reveal">
-        <div class="console-orbit"></div><div class="console-orbit"></div><div class="console-orbit"></div><div class="console-core"></div>
-        <div class="system-card s1"><b>PCR</b>Policy · Consciousness · Routine</div>
-        <div class="system-card s2"><b>QR</b>Qualia · Rhythm · embodied manifestation</div>
-        <div class="system-card s3"><b>Logic</b>Naming · Pressure · Drift · Phase Transition</div>
-        <div class="system-card s4"><b>Protocol</b>Input → Audit → Engineering → Feedback</div>
-        <div class="system-card s5"><b>C = Q × R</b>Consciousness manifests as qualia through rhythm</div>
+    </section>
+
+    <section id="position">
+      <div class="shell">
+        <div class="section-head reveal">
+          <div class="eyebrow">00 / Position Upgrade</div>
+          <h2>从框架到接口，从诊断到生成</h2>
+          <p class="desc zh">v3.0 已经把 PCR-QR 接入命名、加压、滑义、相变。v4.0 的升级不是再多一层解释，而是把它变成一个可进入、可运行、可教学、可审计、可输出的社会问题生成诊断器。</p>
+          <p class="desc en">v3.0 already connected PCR-QR to Naming, Pressure, Drift, and Phase Transition. v4.0 does not add another explanation layer; it turns PCR-QR into an enterable, operational, teachable, auditable, output-producing diagnostic engine for social problems.</p>
+        </div>
+        <div class="split-panel glass reveal">
+          <div class="big-quote zh">不是只问：<br><span>问题是什么？</span></div>
+          <div class="big-quote en">Not only:<br><span>what is the problem?</span></div>
+          <div>
+            <p class="zh">v4.0 要问：这个问题如何被命名？谁拥有命名权？哪个词正在终止理解？哪条通道正在遮蔽经验？哪个节律错配正在重复制造痛苦？什么接口可以让现实反馈回语言并完成再命名？</p>
+            <p class="en">v4.0 asks: how is this problem named? Who owns the naming power? Which term is terminating understanding? Which channel occludes experience? Which rhythm mismatch reproduces pain? What interface can return reality-feedback into language and produce re-naming?</p>
+            <div class="tag cyan">Operational Canon</div><div class="tag gold">Social Diagnosis</div><div class="tag pink">Reality-Generation Audit</div>
+          </div>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section id="position">
-    <div class="shell">
-      <div class="section-head reveal"><div class="eyebrow">01 / Position Upgrade</div><h2>从双层框架到生成诊断引擎</h2><p class="desc zh">原网站已经把 PCR-QR 定位为公共社会问题的双层分析框架：外层 PCR 处理政策、文明意识、生活规律；内层 QR 处理感质与节律，并通过 C = Qualia × Rhythm 连接两层。</p><p class="desc en">The original site defines PCR-QR as a dual-layer diagnostic framework: outer PCR handles policy, consciousness, and routine; inner QR handles qualia and rhythm, connected through C = Qualia × Rhythm.</p></div>
-      <div class="split-panel glass reveal">
-        <div class="big-quote zh">不是只问：<br><span>问题是什么？</span></div>
-        <div class="big-quote en">Not only:<br><span>what is the problem?</span></div>
-        <div><p class="zh">v3.0 要问：这个问题是被哪些语言命名、被哪些通道压制、被哪些节律错配、被哪些制度惯性反复生产出来的？</p><p class="en">v3.0 asks: by which language is this problem named, through which channels is it suppressed, through which rhythms is it mismatched, and by which institutional routines is it reproduced?</p><div class="tag cyan">Application Object Layer</div><div class="tag gold">Logic Generative Interface</div><div class="tag">Public Diagnosis</div></div>
+    <section id="axiom">
+      <div class="shell">
+        <div class="section-head reveal">
+          <div class="eyebrow">01 / V12 Interface Axiom</div>
+          <h2>接口公理进入 PCR-QR</h2>
+          <p class="desc zh">PCR-QR v4.0 正式接入全维逻辑学 V12 的核心升级：一个理论若不能形成入口，就会停留在自我燃烧；一个理论一旦形成接口，就开始改变现实。</p>
+          <p class="desc en">PCR-QR v4.0 formally integrates the central upgrade of Total Logic V12: a theory that cannot form an entrance remains self-burning; a theory that forms an interface begins to alter reality.</p>
+        </div>
+        <div class="axiom-panel glass reveal">
+          <div class="axiom-card">
+            <h3>公理 11｜接口公理</h3>
+            <p class="zh">一个理论若不能形成入口，就会停留在自我燃烧；一个理论一旦形成接口，就开始改变现实。</p>
+            <p class="en">A theory that cannot form an interface remains self-burning; a theory that forms an interface begins to alter reality.</p>
+          </div>
+          <div class="axiom-card">
+            <h3>PCR-QR 的接口任务</h3>
+            <p class="zh">把上层全维逻辑学翻译成公共问题诊断，把公共问题诊断翻译成工程选择，把工程选择翻译成现实反馈，再把反馈送回语言进行再命名。</p>
+            <p class="en">Translate upper-layer Total Logic into public-problem diagnosis, translate diagnosis into engineering choice, translate engineering choice into real-world feedback, then send feedback back into language for re-naming.</p>
+          </div>
+        </div>
+        <div class="chain reveal" aria-label="Total Logic chain">
+          <span class="chip">Vibration</span><span class="arrow">→</span><span class="chip">Qualia</span><span class="arrow">→</span><span class="chip">Rhythm</span><span class="arrow">→</span><span class="chip">Language</span><span class="arrow">→</span><span class="chip">Logic</span><span class="arrow">→</span><span class="chip">Structure</span><span class="arrow">→</span><span class="chip">Protocol</span><span class="arrow">→</span><span class="chip">System</span><span class="arrow">→</span><span class="chip">Reality</span><span class="arrow">→</span><span class="chip">Feedback</span><span class="arrow">→</span><span class="chip">Language Again</span>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section id="logic">
-    <div class="shell">
-      <div class="section-head reveal"><div class="eyebrow">02 / Logic Generative Layer</div><h2>语言操作层进入 PCR-QR</h2><p class="desc zh">这次升级的核心：把全维逻辑学的“命名行为 / 加压行为 / 滑义行为 / 相变行为”接入 PCR-QR。公共问题不是先在那里，然后等待解释；公共问题在语言操作、制度通道和身体节律中被制造成当前形态。</p><p class="desc en">The core upgrade: integrate the four operations of Total Logic — Naming, Pressure, Drift, and Phase Transition — into PCR-QR. Public problems are not simply “there” waiting for explanation; they are shaped through language operations, institutional channels, and embodied rhythm.</p></div>
-      <div class="grid-4">
-        <article class="card reveal"><span class="num">01</span><h3>命名行为 / Naming</h3><p class="zh">先审计问题被叫什么。命名不是标签，而是规则修改。</p><p class="en">Audit what the problem is called. Naming is not labeling; it modifies the rule of the game.</p><div class="tag cyan">rule modification</div></article>
-        <article class="card reveal"><span class="num">02</span><h3>加压行为 / Pressure</h3><p class="zh">追问这个词如何被重复、合法化、制度化，直到暴露隐藏权力。</p><p class="en">Ask how the term is repeated, legitimized, and institutionalized until hidden power appears.</p><div class="tag gold">critical pressure</div></article>
-        <article class="card reveal"><span class="num">03</span><h3>滑义行为 / Drift</h3><p class="zh">让词跨层移动：医学词、政策词、伦理词、身体词可能互相偷换。</p><p class="en">Let terms move across layers: medical, policy, ethical, and bodily terms may substitute for one another.</p><div class="tag">semantic drift</div></article>
-        <article class="card reveal"><span class="num">04</span><h3>相变行为 / Phase</h3><p class="zh">把问题从“谁错了”相变为“哪个生成条件制造了这个问题”。</p><p class="en">Shift from “who is wrong” to “which generative conditions produce this problem.”</p><div class="tag gold">system transition</div></article>
+    <section id="logic">
+      <div class="shell">
+        <div class="section-head reveal"><div class="eyebrow">02 / Logic Generative Core</div><h2>语言操作层：四步不是装饰，是引擎</h2><p class="desc zh">命名、加压、滑义、相变不只是分析标签，而是让公共问题从“表面议题”进入“生成条件”的四级引擎。</p><p class="desc en">Naming, Pressure, Drift, and Phase Transition are not decorative analytic labels. They are the four-stage engine that moves a public problem from surface issue to generative condition.</p></div>
+        <div class="grid-4">
+          <article class="card reveal"><span class="num">01</span><h3>命名行为 / Naming</h3><p class="zh">审计问题被叫什么。命名不是标签，而是规则修改。谁命名，谁就预设了行动路径。</p><p class="en">Audit what the problem is called. Naming is not labeling; it modifies the game rule. Whoever names pre-sets the action path.</p><div class="tag cyan">rule modification</div></article>
+          <article class="card reveal"><span class="num">02</span><h3>加压行为 / Pressure</h3><p class="zh">追问这个词如何被重复、合法化、制度化，直到隐藏权力和堵塞通道显形。</p><p class="en">Ask how the term is repeated, legitimized, and institutionalized until hidden power and blocked channels appear.</p><div class="tag gold">critical pressure</div></article>
+          <article class="card reveal"><span class="num">03</span><h3>滑义行为 / Drift</h3><p class="zh">让词跨层移动。医学词、政策词、伦理词、经济词、身体词经常互相偷换责任。</p><p class="en">Let terms move across layers. Medical, policy, ethical, economic, and bodily terms often displace responsibility onto one another.</p><div class="tag pink">semantic drift</div></article>
+          <article class="card reveal"><span class="num">04</span><h3>相变行为 / Phase</h3><p class="zh">把问题从“谁错了 / 如何修补”相变为“哪个生成条件持续制造这个问题”。</p><p class="en">Shift from “who is wrong / how to fix” to “which generative condition keeps producing this problem.”</p><div class="tag gold">system transition</div></article>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section id="operation">
-    <div class="shell">
-      <div class="section-head reveal"><div class="eyebrow">03 / Operational Procedure</div><h2>PCR-QR v3.0 运行流程</h2><p class="desc zh">v2.0 是双层诊断；v3.0 是运行协议。它把每一个公共问题送进同一条可审计流程。</p><p class="desc en">v2.0 is a dual-layer diagnosis; v3.0 is an operational protocol. Each public problem enters the same auditable procedure.</p></div>
-      <div class="steps reveal">
-        <div class="step"><div><b>Input / 输入</b><span>选择一个公共问题，保留原始语言，不急着解释。</span></div></div>
-        <div class="step"><div><b>Naming Audit / 命名审计</b><span>问题被什么词命名？谁拥有命名权？哪个词正在终止理解？</span></div></div>
-        <div class="step"><div><b>PCR Mapping / 公共结构映射</b><span>政策、文明意识、生活规律三层如何耦合？</span></div></div>
-        <div class="step"><div><b>QR Manifestation / 感质节律显影</b><span>问题在身体中是什么质地？被什么节律采样？</span></div></div>
-        <div class="step"><div><b>Operation Layer / 四层操作</b><span>命名、加压、滑义、相变，找出真正瓶颈。</span></div></div>
-        <div class="step"><div><b>Engineering Choice / 工程选择</b><span>通道工程、节律工程、感质工程，或三者组合。</span></div></div>
-        <div class="step"><div><b>Feedback / 反馈再命名</b><span>现实输出反击语言，语言重新命名，系统继续生成。</span></div></div>
+    <section id="operation">
+      <div class="shell">
+        <div class="section-head reveal"><div class="eyebrow">03 / Operational Procedure v4.0</div><h2>十二闸门运行流程</h2><p class="desc zh">v4.0 把原来的运行流程升级为十二闸门。每个公共问题都必须穿过同一条可审计路径，才能从“议题”变成“可工程化的现实接口”。</p><p class="desc en">v4.0 upgrades the procedure into twelve gates. Every public problem passes through the same auditable path before becoming an engineerable reality-interface.</p></div>
+        <div class="steps reveal">
+          <div class="step"><div><b>Raw Problem / 原始问题</b><span>保留原始语言，不急着消毒，不急着学术化。</span></div></div>
+          <div class="step"><div><b>Axiom Zero Sensor / 公理零感知</b><span>用充满感情的情感提供重力，用无温度感质提供精度。</span></div></div>
+          <div class="step"><div><b>Naming Audit / 命名审计</b><span>问题被什么词命名？谁拥有命名权？哪个词正在终止理解？</span></div></div>
+          <div class="step"><div><b>Power Audit / 权力审计</b><span>这个命名让谁更容易行动？让谁更难被听见？</span></div></div>
+          <div class="step"><div><b>PCR Mapping / 公共结构映射</b><span>政策、文明意识、生活规律三层如何耦合？</span></div></div>
+          <div class="step"><div><b>QR Manifestation / 感质节律显影</b><span>问题在身体里是什么质地？被什么时间结构采样？</span></div></div>
+          <div class="step"><div><b>Pressure Test / 加压测试</b><span>重复追问关键词，直到隐藏前提和堵塞通道暴露。</span></div></div>
+          <div class="step"><div><b>Drift Map / 滑义地图</b><span>标记词义从医学、政策、伦理、经济、媒体、身体之间如何滑动。</span></div></div>
+          <div class="step"><div><b>Phase Proposition / 相变命题</b><span>把问题改写成“生成条件命题”。</span></div></div>
+          <div class="step"><div><b>Interface Engineering / 接口工程</b><span>选择语言、通道、节律、感质、反馈、协议工程。</span></div></div>
+          <div class="step"><div><b>External Legibility / 外部可读性</b><span>生成正典版、学术版、产品版、大众版四种表述。</span></div></div>
+          <div class="step"><div><b>Feedback Re-naming / 反馈再命名</b><span>现实输出反击语言，语言重新命名，系统继续生成。</span></div></div>
+        </div>
+        <div class="formula mono reveal"><strong>Operational Chain:</strong> Input → Axiom Zero Sensor → Naming → Power → PCR → QR → Pressure → Drift → Phase → Interface Engineering → External Legibility → Feedback → Re-naming</div>
+        <div class="op-map reveal">
+          <div class="op-node"><strong>Gate 01-02</strong><p>保留原始经验，同时建立“有重力的精确”。</p></div>
+          <div class="op-node"><strong>Gate 03-04</strong><p>找到命名权与权力分配，而不是只讨论问题表面。</p></div>
+          <div class="op-node"><strong>Gate 05-06</strong><p>同时映射公共结构与身体显影。</p></div>
+          <div class="op-node"><strong>Gate 07-08</strong><p>加压关键词，绘制跨层偷换路径。</p></div>
+          <div class="op-node"><strong>Gate 09-10</strong><p>写出相变命题并选择工程接口。</p></div>
+          <div class="op-node"><strong>Gate 11-12</strong><p>外部可读性 + 现实反馈 + 再命名。</p></div>
+        </div>
       </div>
-      <div class="formula mono reveal"><strong>v3.0 Formula:</strong> Input → Naming → PCR → QR → Pressure → Drift → Phase → Engineering → Feedback → Re-naming</div>
-    </div>
-  </section>
+    </section>
 
-  <section id="pcrqr">
-    <div class="shell">
-      <div class="section-head reveal"><div class="eyebrow">04 / PCR-QR Core</div><h2>双层结构保留，但升级为接口</h2><p class="desc zh">PCR-QR 的原核心保留：外层结构与内层经验通过一个明确接口相连。</p><p class="desc en">The original PCR-QR core remains: outer public structure and inner embodied experience are connected through one explicit interface.</p></div>
-      <div class="triad">
-        <article class="card reveal"><div class="letter">P</div><h3>Policy / 政策</h3><p class="zh">法律、制度、预算、执行机制。问：什么被正式允许或禁止？</p><p class="en">Law, institutions, budget, enforcement. What is formally allowed or prohibited?</p></article>
-        <article class="card reveal"><div class="letter">C</div><h3>Consciousness / 文明意识</h3><p class="zh">什么算问题，谁能说话，什么语言被承认。</p><p class="en">What counts as a problem, who can speak, which language is recognized.</p></article>
-        <article class="card reveal"><div class="letter">R</div><h3>Routine / 生活规律</h3><p class="zh">工作、家庭、消费、居住如何无意中重复生产问题。</p><p class="en">How work, family, consumption, and residence reproduce the problem.</p></article>
+    <section id="pcrqr">
+      <div class="shell">
+        <div class="section-head reveal"><div class="eyebrow">04 / PCR-QR Core</div><h2>双层结构保留，但成为运行接口</h2><p class="desc zh">PCR-QR 的核心仍然是外层公共结构与内层身体经验的连接。v4.0 的不同在于：连接不是解释，而是接口；接口不是展示，而是现实操作入口。</p><p class="desc en">PCR-QR still connects outer public structure with inner bodily experience. v4.0 changes the status of that connection: it is not explanation but interface; not display but operational entrance.</p></div>
+        <div class="grid-3">
+          <article class="card reveal"><div class="letter">P</div><h3>Policy / 政策</h3><p class="zh">法律、制度、预算、执行机制。问：什么被正式允许、禁止、资助、惩罚？</p><p class="en">Law, institutions, budget, enforcement. What is formally allowed, prohibited, funded, or punished?</p></article>
+          <article class="card reveal"><div class="letter">C</div><h3>Consciousness / 文明意识</h3><p class="zh">什么算问题，谁能说话，什么语言被承认，什么经验被取消。</p><p class="en">What counts as a problem, who can speak, which language is recognized, which experience is cancelled.</p></article>
+          <article class="card reveal"><div class="letter">R</div><h3>Routine / 生活规律</h3><p class="zh">工作、家庭、消费、居住、算法与日常流程如何重复生产问题。</p><p class="en">How work, family, consumption, residence, algorithms, and daily routines reproduce the problem.</p></article>
+        </div>
+        <div style="height:18px"></div>
+        <div class="grid-2">
+          <article class="card reveal"><div class="letter q">Q</div><h3>Qualia / 感质</h3><p class="zh">问题在身体里的纹理：强度、分布、压强、麻木、恐惧、疲惫、羞耻、过载。</p><p class="en">The bodily texture of a problem: intensity, distribution, pressure, numbness, fear, fatigue, shame, overload.</p></article>
+          <article class="card reveal"><div class="letter r">R</div><h3>Rhythm / 节律</h3><p class="zh">感质被采样和显影的时间结构：连续/事件、快/慢、代际、政策周期、媒体周期。</p><p class="en">The temporal structure through which qualia is sampled and manifested: continuous/event-based, fast/slow, intergenerational, policy-cycle, media-cycle.</p></article>
+        </div>
+        <div class="formula mono reveal"><strong>Interface Equation:</strong> C = Q × R / 文明意识层的实际运行机制，是感质在节律中显影。</div>
       </div>
-      <div style="height:18px"></div>
-      <div class="grid-2">
-        <article class="card reveal"><div class="letter q">Q</div><h3>Qualia / 感质</h3><p class="zh">问题在身体里的纹理：强度、分布、配置。</p><p class="en">The bodily texture of a problem: intensity, distribution, configuration.</p></article>
-        <article class="card reveal"><div class="letter r">R</div><h3>Rhythm / 节律</h3><p class="zh">感质被采样和显影的时间结构：连续/事件、快/慢、多层叠加。</p><p class="en">The temporal structure through which qualia is sampled and manifested.</p></article>
+    </section>
+
+    <section id="cases">
+      <div class="shell">
+        <div class="section-head reveal"><div class="eyebrow">05 / Five Cases · v4.0 Re-coded</div><h2>五案例：从诊断到接口工程</h2><p class="desc zh">每个案例都不再只是“案例”。它们是五种公共问题生成机制：通道遮蔽、政治性通道遮蔽、节律错配、反身技术捕获、多层节律不平等。</p><p class="desc en">Each case is no longer merely a case. Together they define five generative mechanisms of public problems: channel occlusion, political channel occlusion, rhythm mismatch, reflexive technological capture, and multi-layer rhythm inequality.</p></div>
+        <details class="case reveal" open><summary><div class="case-id">CASE 5.1</div><div><div class="case-title">心理健康公共服务 / Mental Health Public Services</div><div class="tag cyan">Channel Occlusion</div><div class="tag gold">HRP Main Battlefield</div></div><div class="case-type">通道遮蔽型</div></summary><div class="case-body"><div class="case-grid"><div class="case-box"><h4>v4.0 Naming Risk</h4><p>痛苦被单一命名为“症状”时，照护入口可能滑成主体取消装置。核心问题不是反医学，而是防止医学语言越权终止理解。</p></div><div class="case-box"><h4>v4.0 Interface Engineering</h4><p>语言操作工程 + 通道工程 + HRP 返回接口。相变命题：从“是否有病”转向“何种通道承认身体经验并提供可持续照护”。</p></div></div></div></details>
+        <details class="case reveal"><summary><div class="case-id">CASE 5.2</div><div><div class="case-title">性别暴力 / Gender Violence</div><div class="tag cyan">Channel Occlusion</div><div class="tag pink">Political Structure</div></div><div class="case-type">政治性通道遮蔽</div></summary><div class="case-body"><div class="case-grid"><div class="case-box"><h4>v4.0 Naming Risk</h4><p>暴力被改名为误会、家事、情绪、舆论事件时，暴力的结构性通道被切断，受害者被迫承担证明自身经验的额外劳动。</p></div><div class="case-box"><h4>v4.0 Interface Engineering</h4><p>通道工程 + 反扑预测 + 命名保护协议。相变命题：从“个案真假”转向“何种语言机制持续把暴力私有化”。</p></div></div></div></details>
+        <details class="case reveal"><summary><div class="case-id">CASE 5.3</div><div><div class="case-title">气候变化 / Climate Change</div><div class="tag gold">Rhythm Mismatch</div><div class="tag">Honest Failure Boundary</div></div><div class="case-type">节律错配型</div></summary><div class="case-body"><div class="case-grid"><div class="case-box"><h4>v4.0 Naming Risk</h4><p>危机、未来、风险、成本这些词把百年尺度压成政策年度与媒体周期，使身体无法真正感到“现在正在发生”。</p></div><div class="case-box"><h4>v4.0 Interface Engineering</h4><p>节律工程 + 感质工程 + 百年反馈接口。相变命题：从“提高认知”转向“建造当下可感的长期反馈”。</p></div></div></div></details>
+        <details class="case reveal"><summary><div class="case-id">CASE 5.4</div><div><div class="case-title">AI 监管 / AI Regulation</div><div class="tag cyan">Qualia Engineering</div><div class="tag gold">Reflexive Capture</div></div><div class="case-type">反身技术捕获</div></summary><div class="case-body"><div class="case-grid"><div class="case-box"><h4>v4.0 Naming Risk</h4><p>AI 不只是被讨论对象，它正在改写讨论 AI 的语言通道。效率、安全、创新、替代等词可能遮蔽感质完整和节律主权。</p></div><div class="case-box"><h4>v4.0 Interface Engineering</h4><p>感质工程 + 反身诊断 + 人类返回协议。相变命题：从“管 AI”转向“保护人类感质与节律不被隐性殖民”。</p></div></div></div></details>
+        <details class="case reveal"><summary><div class="case-id">CASE 5.5</div><div><div class="case-title">教育不平等 / Educational Inequality</div><div class="tag gold">Multi-layer Rhythm</div><div class="tag pink">Human Return Learning</div></div><div class="case-type">多层节律不平等</div></summary><div class="case-body"><div class="case-grid"><div class="case-box"><h4>v4.0 Naming Risk</h4><p>公平、焦虑、选择、努力这些词同时遮蔽结构与维持优势。教育问题被误读为个体表现问题，而不是节律与通道分配问题。</p></div><div class="case-box"><h4>v4.0 Interface Engineering</h4><p>Human Return Learning + 节律重定位 + 早期发展接口。相变命题：从升学竞争节律转向学习者返回自身节律。</p></div></div></div></details>
       </div>
-      <div class="formula mono reveal"><strong>Interface:</strong> C = Qualia × Rhythm / 文明意识层的实际运行机制，是感质在节律中显影。</div>
-    </div>
-  </section>
+    </section>
 
-  <section id="cases">
-    <div class="shell">
-      <div class="section-head reveal"><div class="eyebrow">05 / Five Cases · v3.0 Re-coded</div><h2>五个案例：从诊断到生成机制审计</h2><p class="desc zh">v2.0 已有五个加压测试。v3.0 为每个案例补入“语言操作层”。</p><p class="desc en">v2.0 already stress-tested five cases. v3.0 adds the language-operation layer to each one.</p></div>
-      <details class="case reveal" open><summary><div class="case-id">CASE 5.1</div><div><div class="case-title">心理健康公共服务 / Mental Health Public Services</div><div class="tag cyan">Channel Occlusion</div><div class="tag gold">HRP Main Battlefield</div></div><div class="case-type">通道遮蔽型</div></summary><div class="case-body"><div class="case-grid"><div class="case-box"><h4>v2.0 Diagnosis</h4><p>感质极高，真实节律连续，但被中立医学化通道压制。不是没有声音，是声音只能用一种语言。</p></div><div class="case-box"><h4>v3.0 Logic Operation</h4><p>命名审计：谁把痛苦命名为“症状”？加压：医学语言何时从照护入口变成主体取消装置？相变：从“是否有病”转向“何种通道承认身体经验”。</p></div></div></div></details>
-      <details class="case reveal"><summary><div class="case-id">CASE 5.2</div><div><div class="case-title">性别暴力 / Gender Violence</div><div class="tag cyan">Channel Occlusion</div><div class="tag">HRP Support</div></div><div class="case-type">政治性通道遮蔽</div></summary><div class="case-body"><div class="case-grid"><div class="case-box"><h4>v2.0 Diagnosis</h4><p>感质极高但分布不均，承载者群体与显影通道权力群体结构性错位。</p></div><div class="case-box"><h4>v3.0 Logic Operation</h4><p>命名审计：暴力如何被改名为误会、家事、舆论事件？滑义审计：司法语言、媒体语言、临床语言如何互相转移责任？</p></div></div></div></details>
-      <details class="case reveal"><summary><div class="case-id">CASE 5.3</div><div><div class="case-title">气候变化 / Climate Change</div><div class="tag gold">Rhythm Mismatch</div><div class="tag">Honest Failure Boundary</div></div><div class="case-type">节律错配型</div></summary><div class="case-body"><div class="case-grid"><div class="case-box"><h4>v2.0 Diagnosis</h4><p>百年尺度物理过程 vs 月年尺度决策，可能数学不可解。</p></div><div class="case-box"><h4>v3.0 Logic Operation</h4><p>命名审计：危机、风险、未来、成本这些词如何降低当下感质？相变：从“知道气候变化”转为“建造当下可感的百年反馈接口”。</p></div></div></div></details>
-      <details class="case reveal"><summary><div class="case-id">CASE 5.4</div><div><div class="case-title">AI 监管 / AI Regulation</div><div class="tag cyan">Qualia Engineering</div><div class="tag gold">Strategic Upgrade</div></div><div class="case-type">复合型</div></summary><div class="case-body"><div class="case-grid"><div class="case-box"><h4>v2.0 Diagnosis</h4><p>技术节律快于公众与监管节律，系统性风险几乎没有具身感质。</p></div><div class="case-box"><h4>v3.0 Logic Operation</h4><p>语言通道自指：AI 正在改写人们讨论 AI 的通道。核心问题：如何保护个体感质完整与节律自主。</p></div></div></div></details>
-      <details class="case reveal"><summary><div class="case-id">CASE 5.5</div><div><div class="case-title">教育不平等 / Educational Inequality</div><div class="tag gold">Multi-layer Rhythm</div><div class="tag">Ethical Vigilance</div></div><div class="case-type">复合型</div></summary><div class="case-body"><div class="case-grid"><div class="case-box"><h4>v2.0 Diagnosis</h4><p>0-3 岁 / 学龄 / 升学 / 生命 / 代际 / 政策六层节律叠加，感质两极分化。</p></div><div class="case-box"><h4>v3.0 Logic Operation</h4><p>命名审计：公平、焦虑、选择、努力这些词如何同时遮蔽结构与维持优势？相变：从升学节律转向早期发展节律。</p></div></div></div></details>
-    </div>
-  </section>
-
-  <section id="matrix">
-    <div class="shell">
-      <div class="section-head reveal"><div class="eyebrow">06 / Cross-Case Matrix</div><h2>跨案例矩阵：加入语言操作层</h2><p class="desc zh">v3.0 新增列：命名风险、主要语言操作、接口工程。</p><p class="desc en">v3.0 adds three columns: naming risk, main language operation, and interface engineering.</p></div>
-      <div class="matrix-wrap reveal"><table><thead><tr><th>案例</th><th>瓶颈类型</th><th>QR 配置</th><th>原核心工程</th><th>v3.0 命名风险</th><th>v3.0 主操作</th></tr></thead><tbody><tr><td>心理健康</td><td>通道遮蔽</td><td>均匀高 · 连续 vs 危机</td><td>通道工程</td><td>病理词越权取消主体</td><td>命名审计 → 通道重建</td></tr><tr><td>性别暴力</td><td>通道遮蔽</td><td>不均高 · 连续 vs 事件</td><td>通道维护</td><td>暴力被改写为私事/误会</td><td>加压 → 反扑预测</td></tr><tr><td>气候变化</td><td>节律错配</td><td>尺度切分 · 百年 vs 年</td><td>节律工程</td><td>未来词降低当下感质</td><td>滑义 → 时间折现接口</td></tr><tr><td>AI 监管</td><td>复合型</td><td>类型切分 · 技术快于决策</td><td>感质 + 节律</td><td>通道被 AI 对象捕获</td><td>相变 → 反身诊断</td></tr><tr><td>教育不平等</td><td>复合型</td><td>两极分化 · 多层叠加</td><td>节律重定位</td><td>公平语言被竞争逻辑吸收</td><td>命名+相变 → 早期节律</td></tr></tbody></table></div>
-    </div>
-  </section>
-
-  <section id="engineering">
-    <div class="shell">
-      <div class="section-head reveal"><div class="eyebrow">07 / Engineering Types</div><h2>三种工程升级为四种接口工程</h2><p class="desc zh">v2.0 有通道工程、节律工程、感质工程。v3.0 新增语言操作工程。</p><p class="desc en">v2.0 has channel, rhythm, and qualia engineering. v3.0 adds language-operation engineering.</p></div>
-      <div class="grid-4">
-        <article class="card reveal"><span class="num">A</span><h3>通道工程</h3><p>为已有但被遮蔽的感质建立显影通道。</p><div class="tag cyan">channel</div></article>
-        <article class="card reveal"><span class="num">B</span><h3>节律工程</h3><p>把真实节律翻译到决策节律中。</p><div class="tag gold">rhythm</div></article>
-        <article class="card reveal"><span class="num">C</span><h3>感质工程</h3><p>为低密度抽象风险建造具身载体。</p><div class="tag">qualia</div></article>
-        <article class="card reveal"><span class="num">D</span><h3>语言操作工程</h3><p>审计命名、加压、滑义与相变，防止旧词终止理解。</p><div class="tag cyan">logic</div></article>
+    <section id="matrix">
+      <div class="shell">
+        <div class="section-head reveal"><div class="eyebrow">06 / Cross-Case Matrix</div><h2>跨案例矩阵：v4.0 生成审计</h2><p class="desc zh">矩阵新增“相变命题”和“接口工程”。这使 PCR-QR 从描述工具升级为行动设计工具。</p><p class="desc en">The matrix adds Phase Proposition and Interface Engineering, moving PCR-QR from descriptive tool to action-design tool.</p></div>
+        <div class="matrix glass reveal">
+          <table>
+            <thead><tr><th>Case</th><th>旧命名风险</th><th>PCR Bottleneck</th><th>QR Manifestation</th><th>Logic Operation</th><th>Phase Proposition</th><th>Interface Engineering</th></tr></thead>
+            <tbody>
+              <tr><td>心理健康</td><td>病理词越权取消主体</td><td>C 通道被医学中立性垄断</td><td>均匀高压 · 连续痛苦</td><td>命名审计 → 加压</td><td>从“是否有病”到“何种通道承认经验”</td><td>语言操作 + 通道 + HRP</td></tr>
+              <tr><td>性别暴力</td><td>暴力被改写为私事/误会</td><td>P/C 权力结构遮蔽发声</td><td>不均高压 · 事件化创伤</td><td>加压 → 滑义</td><td>从“个案真假”到“私有化暴力机制”</td><td>通道维护 + 反扑预测</td></tr>
+              <tr><td>气候变化</td><td>未来词降低当下感质</td><td>R 决策周期与物理周期断裂</td><td>低密度抽象风险</td><td>滑义 → 节律重映射</td><td>从“知道风险”到“当下可感反馈”</td><td>节律 + 感质 + 长周期接口</td></tr>
+              <tr><td>AI 监管</td><td>效率/创新词捕获通道</td><td>C 被技术对象反向改写</td><td>技术快于身体与公共理解</td><td>相变 → 反身诊断</td><td>从“管 AI”到“保护人类感质完整”</td><td>感质 + 协议 + HMI</td></tr>
+              <tr><td>教育不平等</td><td>公平语言被竞争逻辑吸收</td><td>R 多层节律错配</td><td>代际叠加 · 感质两极分化</td><td>命名 + 相变</td><td>从升学节律到学习者节律返回</td><td>MellowEd + 节律重定位</td></tr>
+            </tbody>
+          </table>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section id="analyzer">
-    <div class="shell">
-      <div class="section-head reveal"><div class="eyebrow">08 / Diagnostic Engine</div><h2>PCR-QR 生成诊断器</h2><p class="desc zh">输入一个公共问题，网站会生成一份 v3.0 诊断骨架。这个不是替代研究，而是把你的逻辑生成流程变成可进入接口。</p><p class="desc en">Enter a public problem and the site generates a v3.0 diagnostic skeleton. This does not replace research; it turns your logic-generative procedure into an interface.</p></div>
-      <div class="analyzer glass reveal"><textarea id="problemInput" placeholder="输入一个问题 / Enter a problem, e.g. ADHD learning support, AI companion regulation, city loneliness..."></textarea><div class="analyzer-actions"><button class="btn primary" id="runBtn" type="button">Generate PCR-QR Audit</button><button class="btn secondary" id="clearBtn" type="button">Clear</button></div><div class="output mono" id="auditOutput">等待输入 / Awaiting input...</div><div class="pill-row"><span class="pill">Naming Audit</span><span class="pill">PCR Mapping</span><span class="pill">QR Manifestation</span><span class="pill">Engineering Choice</span><span class="pill">Feedback Loop</span></div></div>
-    </div>
-  </section>
+    <section id="engineering">
+      <div class="shell">
+        <div class="section-head reveal"><div class="eyebrow">07 / Six Interface Engineering Types</div><h2>六种接口工程</h2><p class="desc zh">v4.0 不再只说“应该干预”。它把干预拆成六种接口工程：语言、通道、节律、感质、反馈、协议。</p><p class="desc en">v4.0 no longer says merely “intervene.” It differentiates intervention into six interface engineering types: language, channel, rhythm, qualia, feedback, and protocol.</p></div>
+        <div class="routes">
+          <article class="route reveal"><strong>语言操作工程</strong><p>审计命名、加压、滑义与相变，防止旧词终止理解。</p></article>
+          <article class="route reveal"><strong>通道工程</strong><p>为已有但被遮蔽的感质建立显影通道。</p></article>
+          <article class="route reveal"><strong>节律工程</strong><p>把真实身体节律翻译到政策、教育、技术与组织节律中。</p></article>
+          <article class="route reveal"><strong>感质工程</strong><p>为低密度抽象风险建造具身感质载体。</p></article>
+          <article class="route reveal"><strong>反馈工程</strong><p>让现实输出回到语言系统，迫使再命名发生。</p></article>
+          <article class="route reveal"><strong>协议工程</strong><p>把诊断变成可重复、可审计、可教学的运行协议。</p></article>
+        </div>
+      </div>
+    </section>
 
-  <section id="system">
-    <div class="shell">
-      <div class="section-head reveal"><div class="eyebrow">09 / Parent System Interface</div><h2>位置关系：PCR-QR 作为中介层</h2><p class="desc zh">升级后，PCR-QR 不再只是一个网页；它是全维逻辑学把上层本体论翻译成公共问题诊断、再把诊断交给 HRP / MellowEd / AiQ 等工具的中介接口。</p><p class="desc en">After this upgrade, PCR-QR is not just a webpage; it is the interface that translates upper-layer ontology into public-problem diagnosis, then routes diagnosis toward HRP, MellowEd, AiQ, and other tools.</p></div>
-      <div class="system-map reveal">SOURCE FIELD / <span class="gold">44271 · Wei Jueran</span>
-└─ ONTOLOGY · <span class="hot">Vibration as Existence</span>
-   └─ TOTAL LOGIC · <span class="pink">Language generates logic; logic generates reality</span>
-      └─ LOGIC GENERATIVE STUDIES · Naming / Pressure / Drift / Phase
-         └─ PUBLIC DISCIPLINE · Qualia-Rhythm Consciousness Studies
-            ├─ EDUCATION INTERFACE · MellowEd / Human Return Learning
-            ├─ HUMAN-MACHINE INTERFACE · BCI-HRP / QDR Engine
-            ├─ RESPONSE ENGINE · AiQ愛&lt;7
-            └─ APPLICATION OBJECT LAYER · <span class="hot">PCR-QR v3.0</span>
-               ├─ Channel Engineering
-               ├─ Rhythm Engineering
-               ├─ Qualia Engineering
-               └─ Language Operation Engineering</div>
-      <div class="hero-actions reveal"><a class="btn primary" href="https://mellowwei.github.io/MellowEd/#contributions" target="_blank" rel="noopener">MellowEd ↗</a><a class="btn secondary" href="https://mellowwei.github.io/BCI-HRP/" target="_blank" rel="noopener">BCI-HRP ↗</a><a class="btn secondary" href="https://mellowwei.github.io/QualiaRhythmMatrix/" target="_blank" rel="noopener">QualiaRhythmMatrix ↗</a></div>
+    <section id="analyzer">
+      <div class="shell">
+        <div class="section-head reveal"><div class="eyebrow">08 / Diagnostic Engine v4.0</div><h2>PCR-QR 全维生成诊断器</h2><p class="desc zh">输入一个公共问题，系统会输出 v4.0 审计骨架：命名风险、PCR 映射、QR 显影、四层语言操作、相变命题、接口工程、外部可读性与反馈再命名。</p><p class="desc en">Enter a public problem. The system outputs a v4.0 audit skeleton: naming risk, PCR mapping, QR manifestation, four language operations, phase proposition, interface engineering, external legibility, and feedback re-naming.</p></div>
+        <div class="engine glass reveal">
+          <div>
+            <textarea id="problem" placeholder="输入公共问题 / Enter a public problem... 例如：学校如何把 ADHD 学习困难命名成自律失败？"></textarea>
+            <select id="caseType">
+              <option value="auto">Auto-detect / 自动识别</option>
+              <option value="mental">Mental Health / 心理健康</option>
+              <option value="gender">Gender Violence / 性别暴力</option>
+              <option value="climate">Climate / 气候</option>
+              <option value="ai">AI Regulation / AI监管</option>
+              <option value="education">Education / 教育</option>
+              <option value="general">General Public Issue / 通用公共问题</option>
+            </select>
+            <div class="engine-controls"><button class="run" id="runBtn" type="button">Generate v4 Audit</button><button class="clear" id="copyBtn" type="button">Copy Output</button><button class="clear" id="clearBtn" type="button">Clear</button></div>
+          </div>
+          <div class="output" id="output">等待输入 / Awaiting input...
+
+Output gates:
+01 Naming Risk
+02 Power Audit
+03 PCR Mapping
+04 QR Manifestation
+05 Pressure Point
+06 Drift Map
+07 Phase Proposition
+08 Interface Engineering
+09 External Legibility
+10 Feedback Re-naming</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="system">
+      <div class="shell">
+        <div class="section-head reveal"><div class="eyebrow">09 / Parent System Interface</div><h2>系统位置：PCR-QR 是社会诊断器官</h2><p class="desc zh">升级后，PCR-QR 不再只是一个网页；它是全维逻辑学把上层本体论翻译成公共问题诊断、再把诊断路由到 MellowEd、BCI-HRP、AiQ、QualiaRhythmMatrix 的中介接口。</p><p class="desc en">After this upgrade, PCR-QR is not just a webpage. It is the intermediary interface that translates upper-layer ontology into public-problem diagnosis, then routes diagnosis toward MellowEd, BCI-HRP, AiQ, and QualiaRhythmMatrix.</p></div>
+        <div class="map glass reveal">
+          <div class="map-line gold"><strong>SOURCE FIELD / 44271 · Wei Jueran</strong></div>
+          <div class="map-line">└─ ONTOLOGY · Vibration as Existence</div>
+          <div class="map-line">&nbsp;&nbsp;└─ TOTAL LOGIC V12 · Operational Canon · Interface Axiom</div>
+          <div class="map-line">&nbsp;&nbsp;&nbsp;&nbsp;└─ LOGIC GENERATIVE STUDIES · Naming / Pressure / Drift / Phase</div>
+          <div class="map-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└─ PUBLIC DISCIPLINE · Qualia-Rhythm Consciousness Studies</div>
+          <div class="map-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─ EDUCATION INTERFACE · MellowEd / Human Return Learning</div>
+          <div class="map-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─ HUMAN-MACHINE INTERFACE · BCI-HRP / QDR Engine</div>
+          <div class="map-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─ RESPONSE ENGINE · AiQ愛&lt;7</div>
+          <div class="map-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─ ARGUMENT AUDIT · QualiaRhythmMatrix</div>
+          <div class="map-line gold">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└─ APPLICATION OBJECT LAYER · PCR-QR v4.0</div>
+        </div>
+        <div class="hero-actions reveal" style="margin-top:22px">
+          <a class="btn secondary" href="https://mellowwei.github.io/MellowEd/" target="_blank" rel="noopener">MellowEd ↗</a>
+          <a class="btn secondary" href="https://mellowwei.github.io/BCI-HRP/" target="_blank" rel="noopener">BCI-HRP ↗</a>
+          <a class="btn secondary" href="https://mellowwei.github.io/QualiaRhythmMatrix/" target="_blank" rel="noopener">QualiaRhythmMatrix ↗</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="manifesto">
+      <div class="shell">
+        <div class="manifesto glass reveal">
+          <div class="eyebrow">10 / v4.0 Manifesto</div>
+          <h2><span class="grad">Public problems are generated.</span></h2>
+          <p class="zh">PCR-QR v4.0 的任务不是温和地解释公共问题，而是强行打开公共问题的生成条件：谁命名、谁沉默、谁被归类、谁被迫证明、谁的身体节律被制度节律吞掉。</p>
+          <p class="en">The task of PCR-QR v4.0 is not to gently explain public problems, but to open their generative conditions: who names, who is silenced, who is classified, who is forced to prove, whose bodily rhythm is swallowed by institutional rhythm.</p>
+          <p class="zh final">公共问题不是被发现的。公共问题是被生成的。也因此，它可以被重新生成。</p>
+          <p class="en final">Public problems are not merely found. They are generated. Therefore, they can be re-generated.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="shell footer-inner">
+      <div>PCR-QR Framework v4.0 · Total Logic Operational Interface<br>魏珏然 / Wei Jueran · 44271 · 427Hz</div>
+      <div>Qualia · Rhythm · Language Operation · Interface Engineering · Public Diagnosis</div>
     </div>
-  </section>
-</main>
-<footer class="footer"><div class="shell footer-inner"><div><strong>PCR-QR Framework v3.0</strong><br>Logic Generative Upgrade · 魏珏然 / Wei Jueran · 44271</div><div>427Hz · Qualia · Rhythm · Language Operation · Public Diagnosis</div></div></footer>
-<script>
-  const body=document.body;const nav=document.getElementById('nav');document.getElementById('menuBtn').onclick=()=>nav.classList.toggle('open');document.querySelectorAll('.nav-links a').forEach(a=>a.onclick=()=>nav.classList.remove('open'));
-  let mode='zh';document.getElementById('langBtn').onclick=()=>{mode=mode==='zh'?'en':'zh';body.classList.toggle('hidden-en',mode==='zh');body.classList.toggle('hidden-zh',mode==='en')};
-  const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')}),{threshold:.12});document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
-  const out=document.getElementById('auditOutput');document.getElementById('clearBtn').onclick=()=>{document.getElementById('problemInput').value='';out.textContent='等待输入 / Awaiting input...'};
-  document.getElementById('runBtn').onclick=()=>{const p=document.getElementById('problemInput').value.trim()||'未命名公共问题 / unnamed public problem';out.innerHTML=`<b>生成诊断 / Generated Audit</b>\n\nINPUT / 输入：${escapeHtml(p)}\n\n1. NAMING AUDIT / 命名审计\n这个问题当前被什么词捕获？哪些词正在帮助理解，哪些词正在终止理解？\nWhat words currently capture this problem? Which words open understanding, and which words terminate it?\n\n2. PCR MAPPING / 公共结构映射\nP: 哪些政策、制度、预算、执行机制参与生产？\nC: 哪些公共话语定义它是否算问题？\nR: 哪些日常规律反复生产它？\n\n3. QR MANIFESTATION / 感质节律显影\nQ: 它在身体里的质地是什么？强度、分布、配置如何？\nR: 它的真实节律与主导接收节律是否错配？\n\n4. LANGUAGE OPERATIONS / 语言操作\nNaming → Pressure → Drift → Phase Transition\n命名 → 加压 → 滑义 → 相变\n\n5. ENGINEERING CHOICE / 工程选择\n选择：通道工程 / 节律工程 / 感质工程 / 语言操作工程，或组合。\n\n6. FEEDBACK / 反馈再命名\n现实输出后必须重新命名：这个问题是否被更准确地显影？`};
-  function escapeHtml(s){return s.replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
-  const canvas=document.getElementById('field'),ctx=canvas.getContext('2d');let W,H,ps=[],mouse={x:0,y:0,on:false};function resize(){W=canvas.width=innerWidth*devicePixelRatio;H=canvas.height=innerHeight*devicePixelRatio;canvas.style.width=innerWidth+'px';canvas.style.height=innerHeight+'px';ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);make()}function make(){const n=Math.min(150,Math.floor(innerWidth/8));ps=Array.from({length:n},(_,i)=>({x:Math.random()*innerWidth,y:Math.random()*innerHeight,vx:(Math.random()-.5)*.32,vy:(Math.random()-.5)*.32,r:Math.random()*1.8+.4,h:i%4,ph:Math.random()*Math.PI*2}))}function col(p,a){return p.h===0?`rgba(79,255,224,${a})`:p.h===1?`rgba(255,227,110,${a})`:p.h===2?`rgba(255,122,217,${a})`:`rgba(120,199,255,${a})`}function loop(){ctx.clearRect(0,0,innerWidth,innerHeight);for(let i=0;i<ps.length;i++){const p=ps[i];p.ph+=.012;p.x+=p.vx+Math.sin(p.ph)*.04;p.y+=p.vy+Math.cos(p.ph)*.04;if(mouse.on){const dx=p.x-mouse.x,dy=p.y-mouse.y,d=Math.hypot(dx,dy);if(d<150){const f=(150-d)/150;p.x+=dx/(d||1)*f*.7;p.y+=dy/(d||1)*f*.7}}if(p.x<-20)p.x=innerWidth+20;if(p.x>innerWidth+20)p.x=-20;if(p.y<-20)p.y=innerHeight+20;if(p.y>innerHeight+20)p.y=-20;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=col(p,.75);ctx.fill();for(let j=i+1;j<ps.length;j++){const q=ps[j],dx=p.x-q.x,dy=p.y-q.y,d=Math.hypot(dx,dy);if(d<105){ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);ctx.strokeStyle=col(p,(1-d/105)*.11);ctx.lineWidth=1;ctx.stroke()}}}requestAnimationFrame(loop)}addEventListener('resize',resize);addEventListener('mousemove',e=>{mouse.x=e.clientX;mouse.y=e.clientY;mouse.on=true});addEventListener('mouseleave',()=>mouse.on=false);resize();loop();
-</script>
+  </footer>
+
+  <script>
+    const html = document.documentElement;
+    const nav = document.getElementById('nav');
+    const menuBtn = document.getElementById('menuBtn');
+    const progress = document.getElementById('progress');
+    menuBtn.addEventListener('click', () => nav.classList.toggle('open'));
+    document.querySelectorAll('.nav-links a').forEach(a => a.addEventListener('click', () => nav.classList.remove('open')));
+    document.querySelectorAll('.lang-btn').forEach(btn => btn.addEventListener('click', () => html.setAttribute('data-lang', btn.dataset.lang)));
+    window.addEventListener('scroll', () => {
+      const max = document.documentElement.scrollHeight - innerHeight;
+      progress.style.width = (scrollY / Math.max(1,max) * 100) + '%';
+    });
+
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver(entries => entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }), {threshold:.12});
+    reveals.forEach(el => observer.observe(el));
+
+    const canvas = document.getElementById('field');
+    const ctx = canvas.getContext('2d');
+    let particles = [], w = 0, h = 0, mouse = {x:0,y:0,active:false};
+    function resize(){
+      w = canvas.width = innerWidth * devicePixelRatio;
+      h = canvas.height = innerHeight * devicePixelRatio;
+      canvas.style.width = innerWidth + 'px'; canvas.style.height = innerHeight + 'px';
+      ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
+      const count = Math.min(150, Math.floor(innerWidth / 8));
+      particles = Array.from({length:count}, (_,i)=>({x:Math.random()*innerWidth,y:Math.random()*innerHeight,vx:(Math.random()-.5)*.32,vy:(Math.random()-.5)*.32,r:Math.random()*1.7+.45,type:i%4,phase:Math.random()*Math.PI*2}));
+    }
+    function col(p,a){return p.type===0?`rgba(99,255,224,${a})`:p.type===1?`rgba(255,231,118,${a})`:p.type===2?`rgba(255,122,221,${a})`:`rgba(119,201,255,${a})`}
+    function tick(){
+      ctx.clearRect(0,0,innerWidth,innerHeight);
+      for(let i=0;i<particles.length;i++){
+        const p=particles[i]; p.phase += .012; p.x += p.vx + Math.sin(p.phase)*.045; p.y += p.vy + Math.cos(p.phase)*.045;
+        if(mouse.active){const dx=p.x-mouse.x, dy=p.y-mouse.y, d=Math.hypot(dx,dy); if(d<150){const f=(150-d)/150; p.x += dx/(d||1)*f*.75; p.y += dy/(d||1)*f*.75;}}
+        if(p.x<-20)p.x=innerWidth+20;if(p.x>innerWidth+20)p.x=-20;if(p.y<-20)p.y=innerHeight+20;if(p.y>innerHeight+20)p.y=-20;
+        ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=col(p,.78);ctx.fill();
+        for(let j=i+1;j<particles.length;j++){const q=particles[j], dx=p.x-q.x, dy=p.y-q.y, d=Math.hypot(dx,dy); if(d<105){ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);ctx.strokeStyle=col(p,(1-d/105)*.11);ctx.lineWidth=1;ctx.stroke();}}
+      }
+      requestAnimationFrame(tick);
+    }
+    addEventListener('resize', resize); addEventListener('mousemove', e=>{mouse.x=e.clientX;mouse.y=e.clientY;mouse.active=true}); addEventListener('mouseleave',()=>mouse.active=false); resize(); tick();
+
+    const problem = document.getElementById('problem');
+    const caseType = document.getElementById('caseType');
+    const output = document.getElementById('output');
+    const archetypes = {
+      mental:{name:'心理健康公共服务 / Mental Health', risk:'病理词越权取消主体；照护语言滑成取消主体资格的语言。', pcr:'C 通道被医学化中立性垄断；P 提供制度入口但常压平经验；R 将长期痛苦切成危机事件。', qr:'高压、连续、难以被事件化；身体经验被迫用单一语言显影。', phase:'从“是否有病”相变为“何种通道承认身体经验并提供可持续照护”。', engineering:'语言操作工程 + 通道工程 + HRP 返回接口'},
+      gender:{name:'性别暴力 / Gender Violence', risk:'暴力被滑义为误会、家事、情绪、舆论事件。', pcr:'P/C 权力结构决定谁被相信；R 把暴力日常化、私有化、事件化。', qr:'不均匀高压；创伤连续存在，但公共通道只承认可证明事件。', phase:'从“个案真假”相变为“何种语言机制持续把暴力私有化”。', engineering:'通道工程 + 命名保护协议 + 反扑预测'},
+      climate:{name:'气候变化 / Climate Change', risk:'未来、风险、成本等词降低当下感质，使长期风险不可身体化。', pcr:'P 的短周期与物理长周期错位；C 知道但不感到；R 继续日常重复。', qr:'低密度抽象感质；百年尺度无法被日常节律采样。', phase:'从“提高认知”相变为“建造当下可感的长期反馈接口”。', engineering:'节律工程 + 感质工程 + 百年反馈界面'},
+      ai:{name:'AI 监管 / AI Regulation', risk:'效率、创新、安全、替代等词捕获讨论通道，遮蔽人的感质完整和节律主权。', pcr:'C 被技术对象反向改写；P 追赶技术节律；R 已经被算法重组。', qr:'技术速度高于身体理解速度；风险缺乏具身感质。', phase:'从“管 AI”相变为“保护人类感质与节律不被隐性殖民”。', engineering:'感质工程 + 协议工程 + HMI/HRP 接口'},
+      education:{name:'教育不平等 / Educational Inequality', risk:'公平、努力、选择、焦虑这些词同时遮蔽结构并维持优势。', pcr:'P 资源分配不均；C 把结构问题道德化为努力问题；R 多层学习节律错配。', qr:'代际压力、注意力错位、身体过载、学习者主体感被制度节律吞掉。', phase:'从升学竞争节律相变为学习者返回自身节律。', engineering:'MellowEd + 节律工程 + 早期发展接口'},
+      general:{name:'通用公共问题 / General Public Issue', risk:'问题可能被一个过度熟悉的词提前关闭理解。', pcr:'定位政策、文明意识、生活规律三层的耦合点。', qr:'识别身体质地、时间结构、压强分布与显影通道。', phase:'从表面议题相变为生成条件命题。', engineering:'语言操作工程 + 通道/节律/感质组合工程'}
+    };
+    function detect(text){
+      const t = text.toLowerCase();
+      if(/教育|学校|学习|adhd|student|school|learning|exam/.test(t)) return 'education';
+      if(/ai|人工智能|算法|model|chatgpt/.test(t)) return 'ai';
+      if(/气候|环境|climate|carbon|warming/.test(t)) return 'climate';
+      if(/性别|暴力|gender|violence|harass/.test(t)) return 'gender';
+      if(/心理|精神|疾病|医疗|mental|health|therapy|symptom|病/.test(t)) return 'mental';
+      return 'general';
+    }
+    function generate(){
+      const text = (problem.value || '').trim();
+      const type = caseType.value === 'auto' ? detect(text) : caseType.value;
+      const a = archetypes[type] || archetypes.general;
+      const raw = text || '未输入具体问题 / No specific problem entered';
+      output.innerHTML = `<b class="cyan">PCR-QR v4.0 TOTAL LOGIC AUDIT</b>\n`+
+`Problem / 原始问题:\n${escapeHtml(raw)}\n\n`+
+`<b class="gold">00. Archetype / 类型定位</b>\n${a.name}\n\n`+
+`<b class="gold">01. Naming Risk / 命名风险</b>\n${a.risk}\n\n`+
+`<b class="gold">02. Power Audit / 权力审计</b>\n谁通过这个命名获得解释权？谁的经验被要求先证明自己？哪个词正在把理解提前终止？\nWho gains interpretive power through this naming? Whose experience is forced to prove itself first? Which term terminates understanding too early?\n\n`+
+`<b class="gold">03. PCR Mapping / 公共结构映射</b>\n${a.pcr}\n\n`+
+`<b class="gold">04. QR Manifestation / 感质节律显影</b>\n${a.qr}\n\n`+
+`<b class="gold">05. Four Operations / 四层语言操作</b>\nNaming: 找出原命名与替代命名。\nPressure: 重复追问这个词如何合法化。\nDrift: 标记词义在医学/政策/伦理/媒体/经济/身体之间如何滑动。\nPhase: 写出生成条件命题。\n\n`+
+`<b class="gold">06. Phase Proposition / 相变命题</b>\n${a.phase}\n\n`+
+`<b class="gold">07. Interface Engineering / 接口工程</b>\n${a.engineering}\n\n`+
+`<b class="gold">08. External Legibility / 外部可读性</b>\nCanonical: 公共问题是语言、通道、节律与制度共同生成的现实结构。\nAcademic: The issue should be analyzed as a co-produced structure across institutional policy, recognized discourse, embodied qualia, and temporal rhythm.\nProduct: Build an interface that helps people identify the naming risk, map the structure, and choose an intervention route.\nPublic: 不是你一个人的问题，是这个系统把问题命名错、接收错、处理错了。\n\n`+
+`<b class="gold">09. Feedback Re-naming / 反馈再命名</b>\n把干预结果重新送回语言系统：如果现实反馈不匹配，必须改名、改通道、改节律、改接口，而不是把失败推回主体。`;
+    }
+    function escapeHtml(s){return s.replace(/[&<>"]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));}
+    document.getElementById('runBtn').addEventListener('click', generate);
+    document.getElementById('clearBtn').addEventListener('click', () => {problem.value='';output.textContent='等待输入 / Awaiting input...';});
+    document.getElementById('copyBtn').addEventListener('click', async () => {await navigator.clipboard.writeText(output.innerText); const b=document.getElementById('copyBtn'); const old=b.textContent; b.textContent='Copied'; setTimeout(()=>b.textContent=old,1100);});
+  </script>
 </body>
 </html>
